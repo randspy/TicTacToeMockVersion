@@ -1,0 +1,24 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+sourceSets.main.java.srcDirs = ['src/main']
+sourceSets.test.java.srcDirs = ['src/test']
+
+dependencies {
+    testCompile "junit:junit:4.11"
+}
+
+jar {
+    baseName = 'tictactoe'
+    version =  '0.0.1'
+    manifest {
+        attributes 'Main-Class': 'com.randspy.tictactoe.Main'
+    }
+}
+
+mainClassName = 'com.randspy.tictactoe.Main'
