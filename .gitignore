@@ -1,6 +1,9 @@
 # IDE
 .idea/*
 
+# IDE unit test runner output
+output/*
+
 # Gradle
 .gradle/*
 build/*
