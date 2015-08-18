@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -17,11 +19,28 @@ public class PlayingGameTest {
 
         Player player = mock(Player.class);
 
-        Board board = new Board();
-        when(player.makesMove()).thenReturn(board);
+        Optional<Board> board = Optional.of(new Board());
+        when(player.makesMove()).thenReturn(board, withNoBoardGameIsFinished());
 
         Game game = new Game(player);
         game.play();
-        verify(player).makesMove();
+        verify(player, times(2)).makesMove();
+    }
+
+    private Optional<Board> withNoBoardGameIsFinished() {
+        return Optional.<Board>empty();
+    }
+
+    @Test
+    public void playerMakesManyValidMoves() {
+
+        Player player = mock(Player.class);
+
+        Optional<Board> board = Optional.of(new Board());
+        when(player.makesMove()).thenReturn(board, board, withNoBoardGameIsFinished());
+
+        Game game = new Game(player);
+        game.play();
+        verify(player, times(3)).makesMove();
     }
 }

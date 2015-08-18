@@ -9,6 +9,6 @@ public class Game {
     }
 
     public void play() {
-        player.makesMove();
+        while(player.makesMove().isPresent()) {}
     }
 }

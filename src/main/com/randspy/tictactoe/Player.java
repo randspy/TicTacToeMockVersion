@@ -1,5 +1,7 @@
 package com.randspy.tictactoe;
 
+import java.util.Optional;
+
 public interface Player {
-    Board makesMove();
+    Optional<Board> makesMove();
 }
