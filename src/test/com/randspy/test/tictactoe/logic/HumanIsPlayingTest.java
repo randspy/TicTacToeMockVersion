@@ -1,13 +1,11 @@
-package com.randspy.test.tictactoe;
+package com.randspy.test.tictactoe.logic;
 
-import com.randspy.tictactoe.*;
+import com.randspy.tictactoe.logic.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;

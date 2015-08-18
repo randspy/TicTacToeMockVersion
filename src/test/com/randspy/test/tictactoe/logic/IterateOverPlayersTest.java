@@ -1,12 +1,8 @@
-package com.randspy.test.tictactoe;
+package com.randspy.test.tictactoe.logic;
 
-import com.randspy.tictactoe.Board;
-import com.randspy.tictactoe.Player;
-import com.randspy.tictactoe.Players;
+import com.randspy.tictactoe.logic.Player;
+import com.randspy.tictactoe.logic.Players;
 import org.junit.Test;
-
-import javax.rmi.CORBA.Stub;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 

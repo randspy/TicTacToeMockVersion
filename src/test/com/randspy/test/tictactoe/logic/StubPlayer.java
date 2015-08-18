@@ -1,7 +1,7 @@
-package com.randspy.test.tictactoe;
+package com.randspy.test.tictactoe.logic;
 
-import com.randspy.tictactoe.Board;
-import com.randspy.tictactoe.Player;
+import com.randspy.tictactoe.logic.Board;
+import com.randspy.tictactoe.logic.Player;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package com.randspy.tictactoe;
+package com.randspy.tictactoe.logic;
 
 import java.util.Optional;
 

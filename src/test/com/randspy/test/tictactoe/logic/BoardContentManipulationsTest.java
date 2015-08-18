@@ -1,8 +1,8 @@
-package com.randspy.test.tictactoe;
+package com.randspy.test.tictactoe.logic;
 
-import com.randspy.tictactoe.Board;
-import com.randspy.tictactoe.PlayerId;
-import com.randspy.tictactoe.PositionOnBoard;
+import com.randspy.tictactoe.logic.Board;
+import com.randspy.tictactoe.logic.PlayerId;
+import com.randspy.tictactoe.logic.PositionOnBoard;
 import org.junit.Before;
 import org.junit.Test;
 

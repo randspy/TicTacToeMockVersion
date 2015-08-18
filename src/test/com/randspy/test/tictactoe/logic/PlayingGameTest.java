@@ -1,9 +1,9 @@
-package com.randspy.test.tictactoe;
+package com.randspy.test.tictactoe.logic;
 
-import com.randspy.tictactoe.Board;
-import com.randspy.tictactoe.Game;
-import com.randspy.tictactoe.Player;
-import com.randspy.tictactoe.Players;
+import com.randspy.tictactoe.logic.Board;
+import com.randspy.tictactoe.logic.Game;
+import com.randspy.tictactoe.logic.Player;
+import com.randspy.tictactoe.logic.Players;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
