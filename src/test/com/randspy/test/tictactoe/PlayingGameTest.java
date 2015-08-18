@@ -33,6 +33,14 @@ public class PlayingGameTest {
     }
 
     @Test
+    public void whenNoMoreMovesLeftExit() {
+        when(player.makesMove()).thenReturn(withNoBoardGameIsFinished());
+
+        game.play();
+        verify(player).makesMove();
+    }
+
+    @Test
     public void playerMakesValidMove() {
         when(player.makesMove()).thenReturn(board, withNoBoardGameIsFinished());
 
