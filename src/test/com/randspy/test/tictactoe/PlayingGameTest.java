@@ -14,13 +14,14 @@ import java.util.Optional;
 
 import static org.mockito.Mockito.*;
 
+@SuppressWarnings("unchecked")
 @RunWith(MockitoJUnitRunner.class)
 public class PlayingGameTest {
 
     private Game game;
     @Mock private Player player;
     private Board board;
-    private Optional<Board> optionalBoard;
+    private Optional<Board> resultBoard;
 
     private Optional<Board> withNoBoardGameIsFinished() {
         return Optional.<Board>empty();
@@ -29,7 +30,7 @@ public class PlayingGameTest {
     @Before
     public void setUp() throws Exception {
         board = new Board();
-        optionalBoard = Optional.of(board);
+        resultBoard = Optional.of(board);
         game = new Game(new Players(player), board);
     }
 
@@ -38,25 +39,25 @@ public class PlayingGameTest {
         when(player.makesMove(board)).thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove(optionalBoard.get());
+        verify(player).makesMove(resultBoard.get());
     }
 
     @Test
     public void playerMakesValidMove() {
-        when(player.makesMove(optionalBoard.get()))
-                .thenReturn(optionalBoard, withNoBoardGameIsFinished());
+        when(player.makesMove(resultBoard.get()))
+                .thenReturn(resultBoard, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(2)).makesMove(optionalBoard.get());
+        verify(player, times(2)).makesMove(resultBoard.get());
     }
 
     @Test
     public void playerMakesManyValidMoves() {
-        when(player.makesMove(optionalBoard.get()))
-                .thenReturn(optionalBoard, optionalBoard, withNoBoardGameIsFinished());
+        when(player.makesMove(resultBoard.get()))
+                .thenReturn(resultBoard, resultBoard, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(3)).makesMove(optionalBoard.get());
+        verify(player, times(3)).makesMove(resultBoard.get());
     }
 
     @Test
@@ -64,33 +65,31 @@ public class PlayingGameTest {
         Player otherPlayer = mock(Player.class);
         game = new Game(new Players(player, otherPlayer), board);
 
-        when(player.makesMove(optionalBoard.get()))
-                .thenReturn(optionalBoard, withNoBoardGameIsFinished());
+        when(player.makesMove(resultBoard.get()))
+                .thenReturn(resultBoard, withNoBoardGameIsFinished());
 
-        when(otherPlayer.makesMove(optionalBoard.get()))
-                .thenReturn(optionalBoard);
+        when(otherPlayer.makesMove(resultBoard.get()))
+                .thenReturn(resultBoard);
 
         game.play();
 
-        verify(player, times(2)).makesMove(optionalBoard.get());
-        verify(otherPlayer, times(1)).makesMove(optionalBoard.get());
+        verify(player, times(2)).makesMove(resultBoard.get());
+        verify(otherPlayer, times(1)).makesMove(resultBoard.get());
     }
 
     @Test
     public void boardFromPlayerMoveShouldBeUsedAsInputForNextMove() {
+        Optional<Board> resultBoardAfterPlayerMove = Optional.of(new Board());
 
-        game = new Game(new Players(player), board);
-        Optional<Board> otherOptionalBoard = Optional.of(new Board());
+        when(player.makesMove(resultBoard.get()))
+                .thenReturn(resultBoardAfterPlayerMove);
 
-        when(player.makesMove(optionalBoard.get()))
-                .thenReturn(otherOptionalBoard);
-
-        when(player.makesMove(otherOptionalBoard.get()))
+        when(player.makesMove(resultBoardAfterPlayerMove.get()))
                 .thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove(optionalBoard.get());
-        verify(player).makesMove(otherOptionalBoard.get());
+        verify(player).makesMove(resultBoard.get());
+        verify(player).makesMove(resultBoardAfterPlayerMove.get());
 
     }
 }
