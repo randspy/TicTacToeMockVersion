@@ -17,10 +17,9 @@ import static org.mockito.Mockito.*;
 public class PlayingGameTest {
 
     private Game game;
-    private Optional<Board> board;
-
-    @Mock
-    private Player player;
+    @Mock private Player player;
+    private Board board;
+    private Optional<Board> optionalBoard;
 
     private Optional<Board> withNoBoardGameIsFinished() {
         return Optional.<Board>empty();
@@ -28,31 +27,34 @@ public class PlayingGameTest {
 
     @Before
     public void setUp() throws Exception {
-        board = Optional.of(new Board());
-        game = new Game(player);
+        board = new Board();
+        optionalBoard = Optional.of(board);
+        game = new Game(player, board);
     }
 
     @Test
     public void whenNoMoreMovesLeftExit() {
-        when(player.makesMove()).thenReturn(withNoBoardGameIsFinished());
+        when(player.makesMove(board)).thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove();
+        verify(player).makesMove(optionalBoard.get());
     }
 
     @Test
     public void playerMakesValidMove() {
-        when(player.makesMove()).thenReturn(board, withNoBoardGameIsFinished());
+        when(player.makesMove(optionalBoard.get()))
+                .thenReturn(optionalBoard, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(2)).makesMove();
+        verify(player, times(2)).makesMove(optionalBoard.get());
     }
 
     @Test
     public void playerMakesManyValidMoves() {
-        when(player.makesMove()).thenReturn(board, board, withNoBoardGameIsFinished());
+        when(player.makesMove(optionalBoard.get()))
+                .thenReturn(optionalBoard, optionalBoard, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(3)).makesMove();
+        verify(player, times(3)).makesMove(optionalBoard.get());
     }
 }
