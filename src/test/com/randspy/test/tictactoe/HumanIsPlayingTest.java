@@ -1,15 +1,15 @@
 package com.randspy.test.tictactoe;
 
-import com.randspy.tictactoe.Board;
-import com.randspy.tictactoe.Display;
-import com.randspy.tictactoe.HumanPlayer;
-import com.randspy.tictactoe.Player;
+import com.randspy.tictactoe.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Optional;
+
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -18,17 +18,32 @@ public class HumanIsPlayingTest {
     private Player player;
     @Mock
     private Display display;
+    @Mock
+    private UserInput userInput;
+    private Board board;
 
     @Before
     public void setUp() throws Exception {
-        player = new HumanPlayer(display);
+        player = new HumanPlayer(display, userInput);
+        board = new Board();
     }
 
     @Test
     public void invalidMove() {
-        final Board UNUSED_BOARD = null;
 
-        player.makesMove(UNUSED_BOARD);
+        when(userInput.getText()).thenReturn("0");
+
+        player.makesMove(board);
         verify(display).displayInvalidMove();
+    }
+
+    @Test public void validMove(){
+
+        when(userInput.getText()).thenReturn("1");
+
+        Board resultBoard = player.makesMove(board).get();
+
+        assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(0, 0)), player.getId());
+        verify(display).displayBoard(board);
     }
 }
