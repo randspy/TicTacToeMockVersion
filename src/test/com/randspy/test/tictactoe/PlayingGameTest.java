@@ -29,7 +29,10 @@ public class PlayingGameTest {
     public void setUp() throws Exception {
         board = new Board();
         optionalBoard = Optional.of(board);
-        game = new Game(player, board);
+        game = new Game.Builder()
+                .withBoard(board)
+                .withPlayer(player)
+                .build();
     }
 
     @Test
