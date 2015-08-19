@@ -2,6 +2,8 @@ package com.randspy.test.tictactoe.logic;
 
 import com.randspy.tictactoe.logic.Display;
 import com.randspy.tictactoe.logic.OutputRender;
+import com.randspy.tictactoe.logic.PlayerId;
+import com.randspy.tictactoe.logic.PlayerToDisplayMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,10 +18,12 @@ public class PresentMessagesToUserTest {
     @Mock
     private OutputRender render;
     private Display display;
+    @Mock
+    private PlayerToDisplayMapper mapper;
 
     @Before
     public void setUp() throws Exception {
-        display = new Display(render);
+        display = new Display(render, mapper);
     }
 
     @Test
@@ -44,5 +48,16 @@ public class PresentMessagesToUserTest {
     public void displayFieldIsOccupied() {
         display.displayFieldIsOccupied();
         verify(render).send("Already occupied field.\n");
+    }
+
+    @Test
+    public void displayPlayerWon() {
+        PlayerId playerId = new PlayerId();
+        String name = "Human player";
+
+        when(mapper.getName(playerId)).thenReturn(name);
+
+        display.displayPlayerWon(playerId);
+        verify(render).send(String.format("%s won", name));
     }
 }

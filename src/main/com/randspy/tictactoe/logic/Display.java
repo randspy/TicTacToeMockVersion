@@ -4,10 +4,12 @@ import com.randspy.tictactoe.logic.Board;
 
 public class Display {
     private OutputRender render;
+    private PlayerToDisplayMapper mapper;
 
-    public Display(OutputRender render) {
+    public Display(OutputRender render, PlayerToDisplayMapper mapper) {
 
         this.render = render;
+        this.mapper = mapper;
     }
 
     public void displayInvalidMove() {
@@ -20,7 +22,7 @@ public class Display {
     }
 
     public void displayPlayerWon(PlayerId id) {
-
+        render.send(String.format("%s won", mapper.getName(id)));
     }
 
     public void displayTie() {
