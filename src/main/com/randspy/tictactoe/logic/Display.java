@@ -14,4 +14,8 @@ public class Display {
     public void displayPlayerWon(PlayerId id) {
 
     }
+
+    public void displayTie() {
+
+    }
 }

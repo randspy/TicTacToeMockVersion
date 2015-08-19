@@ -35,8 +35,10 @@ public class HumanPlayer extends Player {
                 display.displayPlayerWon(winner.get());
                 return Optional.empty();
             }
-            else
-            {
+            else if (board.isFull()) {
+                display.displayTie();
+                return Optional.empty();
+            } else {
                 return Optional.of(board);
             }
         }

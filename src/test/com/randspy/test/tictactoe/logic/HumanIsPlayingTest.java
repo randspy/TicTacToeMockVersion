@@ -71,4 +71,20 @@ public class HumanIsPlayingTest {
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(otherPlayerId);
     }
+
+    @Test public void tieGame() {
+        when(userInput.getText()).thenReturn("1");
+        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+
+        for (int idx = 0; idx < board.getDimension(); idx++) {
+            for (int idy = 0; idy < board.getDimension(); idy++) {
+                board.setPlayerAtPosition(player.getId(), new PositionOnBoard(idx, idy));
+            }
+        }
+
+        assertFalse(player.makesMove(board).isPresent());
+
+        verify(display).displayBoard(board);
+        verify(display).displayTie();
+    }
 }
