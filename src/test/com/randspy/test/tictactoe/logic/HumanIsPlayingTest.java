@@ -44,12 +44,14 @@ public class HumanIsPlayingTest {
         return when(gameResult.winnerIs(board)).thenReturn(value);
     }
 
-    private void fillBoardToFull() {
+    private void fillBoardToFullExceptFirstOne() {
         for (int idx = 0; idx < board.getDimension(); idx++) {
             for (int idy = 0; idy < board.getDimension(); idy++) {
                 board.setPlayerAtPosition(player.getId(), new PositionOnBoard(idx, idy));
             }
         }
+
+        board.setPlayerAtPosition(null, new PositionOnBoard(0, 0));
     }
 
     @Test
@@ -133,8 +135,8 @@ public class HumanIsPlayingTest {
         expectUserInputs("1");
         expectWinner(Optional.empty());
 
-        fillBoardToFull();
-        board.setPlayerAtPosition(null, new PositionOnBoard(0, 0));
+        fillBoardToFullExceptFirstOne();
+
         noMoreMovesInGame();
 
         verify(display).displayInstructions();
