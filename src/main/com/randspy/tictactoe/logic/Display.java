@@ -1,6 +1,6 @@
 package com.randspy.tictactoe.logic;
 
-import com.randspy.tictactoe.logic.Board;
+import java.util.Optional;
 
 public class Display {
     private OutputRender render;
@@ -14,11 +14,6 @@ public class Display {
 
     public void displayInvalidMove() {
         render.send("Illegal input.\n");
-
-    }
-
-    public void displayBoard(Board board) {
-
     }
 
     public void displayPlayerWon(PlayerId id) {
@@ -35,5 +30,37 @@ public class Display {
 
     public void displayFieldIsOccupied() {
         render.send("Already occupied field.\n");
+    }
+
+    public void displayBoard(Board board) {
+
+        render.send(
+                printHorizontalSeparator() +
+                printRow(board, 0) +
+                printHorizontalSeparator() +
+                printRow(board, 1) +
+                printHorizontalSeparator() +
+                printRow(board, 2) +
+                printHorizontalSeparator());
+    }
+
+    private String printHorizontalSeparator() {
+        return "-------\n";
+    }
+
+    private String printRow(Board board, int row) {
+        final String rowSeparator = "|";
+        String printedRow = rowSeparator;
+
+        for (int idx = 0; idx < board.getDimension(); idx++) {
+            Optional<String> playersCharacter =
+                    mapper.getCharacter(board.getPlayerAtPosition(new PositionOnBoard(row, idx)));
+
+            final String emptyField = " ";
+            final String gameFiled = playersCharacter.isPresent() ? playersCharacter.get() : emptyField;
+
+            printedRow += gameFiled + rowSeparator;
+        }
+        return printedRow + "\n";
     }
 }
