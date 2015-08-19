@@ -7,6 +7,8 @@ public class HumanPlayer extends Player {
     private UserInput userInput;
     private GameResult gameResult;
     private Board board;
+    private int row;
+    private int column;
 
     public HumanPlayer(Display display, UserInput userInput, GameResult gameResult) {
         this.display = display;
@@ -19,27 +21,23 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
-        int boardStartingPosition = 1;
-        int position = toNumber(userInput.getText()) - boardStartingPosition;
+        retrievePosition();
 
-        int row = position / board.getDimension();
-        int column = position % board.getDimension();
-
-        if(isValidMove(row, column))
+        if(isValidMove())
         {
-            board.setPlayerAtPosition(getId(), new PositionOnBoard(0, 0));
-            display.displayBoard(board);
+            this.board.setPlayerAtPosition(getId(), new PositionOnBoard(0, 0));
+            display.displayBoard(this.board);
 
-            Optional<PlayerId> winner = gameResult.winnerIs(board);
+            Optional<PlayerId> winner = gameResult.winnerIs(this.board);
             if (winner.isPresent()) {
                 display.displayPlayerWon(winner.get());
                 return Optional.empty();
             }
-            else if (board.isFull()) {
+            else if (this.board.isFull()) {
                 display.displayTie();
                 return Optional.empty();
             } else {
-                return Optional.of(board);
+                return Optional.of(this.board);
             }
         }
         else {
@@ -47,6 +45,14 @@ public class HumanPlayer extends Player {
         }
 
         return null;
+    }
+
+    private void retrievePosition() {
+        int boardStartingPosition = 1;
+        int position = toNumber(userInput.getText()) - boardStartingPosition;
+
+        row = position / this.board.getDimension();
+        column = position % this.board.getDimension();
     }
 
     public int toNumber(String input) {
@@ -57,7 +63,7 @@ public class HumanPlayer extends Player {
         }
     }
 
-    private boolean isValidMove(int row, int column) {
+    private boolean isValidMove() {
         return isInRange(row) && isInRange(column);
     }
 
