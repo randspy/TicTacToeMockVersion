@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.Optional;
 
@@ -25,17 +26,38 @@ public class HumanIsPlayingTest {
     @Mock
     private GameResult gameResult;
 
+    private void noMoreMovesInGame() {
+        assertFalse(player.makesMove(board).isPresent());
+    }
+
+    private void expectUserInputs(String value, String... values) {
+        when(userInput.getText()).thenReturn(value, values);
+    }
+
     @Before
     public void setUp() throws Exception {
         player = new HumanPlayer(display, userInput, gameResult);
         board = new Board();
     }
 
+    private OngoingStubbing<Optional<PlayerId>> expectWinner(Optional<PlayerId> value) {
+        return when(gameResult.winnerIs(board)).thenReturn(value);
+    }
+
+    private void fillBoardToFull() {
+        for (int idx = 0; idx < board.getDimension(); idx++) {
+            for (int idy = 0; idy < board.getDimension(); idy++) {
+                board.setPlayerAtPosition(player.getId(), new PositionOnBoard(idx, idy));
+            }
+        }
+    }
+
     @Test
     public void invalidMoveIsFallowedByValidOne() {
 
-        when(userInput.getText()).thenReturn("0", "1");
-        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+        expectUserInputs("0", "1");
+        Optional<PlayerId> value = Optional.empty();
+        expectWinner(value);
 
         player.makesMove(board);
         verify(display).displayInvalidMove();
@@ -43,59 +65,56 @@ public class HumanIsPlayingTest {
     }
 
     @Test
-    public void invalidInput() {
+    public void invalidInputIsFallowedByValidOne() {
 
-        when(userInput.getText()).thenReturn("p", "1");
-        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+        expectUserInputs("p", "1");
+        expectWinner(Optional.empty());
 
         player.makesMove(board);
         verify(display).displayInvalidMove();
         verify(display).displayBoard(board);
     }
 
-    @Test public void validMove(){
+    @Test
+    public void validMove(){
 
-        when(userInput.getText()).thenReturn("1");
-        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+        expectUserInputs("5");
+        expectWinner(Optional.empty());
 
         Board resultBoard = player.makesMove(board).get();
 
-        assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(0, 0)), player.getId());
+        assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), player.getId());
         verify(display).displayBoard(board);
     }
 
     @Test public void winningGame() {
-        when(userInput.getText()).thenReturn("1");
-        when(gameResult.winnerIs(board)).thenReturn(Optional.of(player.getId()));
+        expectUserInputs("1");
+        expectWinner(Optional.of(player.getId()));
 
-        assertFalse(player.makesMove(board).isPresent());
+        noMoreMovesInGame();
 
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(player.getId());
     }
 
     @Test public void loosingGame() {
-        when(userInput.getText()).thenReturn("1");
+        expectUserInputs("1");
         PlayerId otherPlayerId = new PlayerId();
-        when(gameResult.winnerIs(board)).thenReturn(Optional.of(otherPlayerId));
+        expectWinner(Optional.of(otherPlayerId));
 
-        assertFalse(player.makesMove(board).isPresent());
+        noMoreMovesInGame();
 
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(otherPlayerId);
     }
 
     @Test public void tieGame() {
-        when(userInput.getText()).thenReturn("1");
-        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+        expectUserInputs("1");
+        expectWinner(Optional.empty());
 
-        for (int idx = 0; idx < board.getDimension(); idx++) {
-            for (int idy = 0; idy < board.getDimension(); idy++) {
-                board.setPlayerAtPosition(player.getId(), new PositionOnBoard(idx, idy));
-            }
-        }
+        fillBoardToFull();
 
-        assertFalse(player.makesMove(board).isPresent());
+        noMoreMovesInGame();
 
         verify(display).displayBoard(board);
         verify(display).displayTie();

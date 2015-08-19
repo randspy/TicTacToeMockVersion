@@ -21,31 +21,14 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
-        while (true) {
+        retrievePosition();
 
-             retrievePosition();
-
-            if(isValidMove())
-            {
-                this.board.setPlayerAtPosition(getId(), new PositionOnBoard(0, 0));
-                display.displayBoard(this.board);
-
-                Optional<PlayerId> winner = gameResult.winnerIs(this.board);
-                if (winner.isPresent()) {
-                    display.displayPlayerWon(winner.get());
-                    return Optional.empty();
-                }
-                else if (this.board.isFull()) {
-                    display.displayTie();
-                    return Optional.empty();
-                } else {
-                    return Optional.of(this.board);
-                }
-            }
-            else {
-                display.displayInvalidMove();
-            }
+        while(!isValidInput()) {
+            display.displayInvalidMove();
+            retrievePosition();
         }
+
+        return reactionOnValidInput();
     }
 
     private void retrievePosition() {
@@ -64,11 +47,32 @@ public class HumanPlayer extends Player {
         }
     }
 
-    private boolean isValidMove() {
+    private boolean isValidInput() {
         return isInRange(row) && isInRange(column);
     }
 
     private boolean isInRange(int position) {
         return position >= 0 && position < board.getDimension();
+    }
+
+    // TODO REFACTOR this method is possibly doing to many things. Weird name indicates it.
+    private Optional<Board> reactionOnValidInput() {
+
+        board.setPlayerAtPosition(getId(), new PositionOnBoard(row, column));
+        display.displayBoard(this.board);
+
+        // TODO REFACTOR into more functional style
+        Optional<PlayerId> winner = gameResult.winnerIs(this.board);
+        if (winner.isPresent()) {
+            display.displayPlayerWon(winner.get());
+            return Optional.empty();
+        }
+        else if (this.board.isFull()) {
+            display.displayTie();
+            return Optional.empty();
+        } else {
+            return Optional.of(this.board);
+        }
+
     }
 }
