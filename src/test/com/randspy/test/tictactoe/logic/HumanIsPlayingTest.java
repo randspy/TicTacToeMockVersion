@@ -60,4 +60,15 @@ public class HumanIsPlayingTest {
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(player.getId());
     }
+
+    @Test public void loosingGame() {
+        when(userInput.getText()).thenReturn("1");
+        PlayerId otherPlayerId = new PlayerId();
+        when(gameResult.winnerIs(board)).thenReturn(Optional.of(otherPlayerId));
+
+        assertFalse(player.makesMove(board).isPresent());
+
+        verify(display).displayBoard(board);
+        verify(display).displayPlayerWon(otherPlayerId);
+    }
 }

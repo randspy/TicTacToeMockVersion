@@ -31,8 +31,8 @@ public class HumanPlayer extends Player {
             display.displayBoard(board);
 
             Optional<PlayerId> winner = gameResult.winnerIs(board);
-            if (winner.isPresent() && winner.get().equals(getId())) {
-                display.displayPlayerWon(getId());
+            if (winner.isPresent()) {
+                display.displayPlayerWon(winner.get());
                 return Optional.empty();
             }
             else
