@@ -40,6 +40,15 @@ public class HumanIsPlayingTest {
         verify(display).displayInvalidMove();
     }
 
+    @Test
+    public void invalidInput() {
+
+        when(userInput.getText()).thenReturn("p");
+
+        player.makesMove(board);
+        verify(display).displayInvalidMove();
+    }
+
     @Test public void validMove(){
 
         when(userInput.getText()).thenReturn("1");

@@ -50,7 +50,11 @@ public class HumanPlayer extends Player {
     }
 
     public int toNumber(String input) {
-        return new Integer(input);
+        try {
+            return new Integer(input);
+        } catch (java.lang.NumberFormatException e) {
+            return 0;
+        }
     }
 
     private boolean isValidMove(int row, int column) {
