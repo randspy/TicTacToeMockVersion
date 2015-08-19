@@ -5,11 +5,13 @@ import java.util.Optional;
 public class HumanPlayer extends Player {
     private Display display;
     private UserInput userInput;
+    private GameResult gameResult;
     private Board board;
 
-    public HumanPlayer(Display display, UserInput userInput) {
+    public HumanPlayer(Display display, UserInput userInput, GameResult gameResult) {
         this.display = display;
         this.userInput = userInput;
+        this.gameResult = gameResult;
     }
 
     @Override
@@ -25,9 +27,18 @@ public class HumanPlayer extends Player {
 
         if(isValidMove(row, column))
         {
-            board.setPlayerAtPosition(getId(), new PositionOnBoard(0,0));
+            board.setPlayerAtPosition(getId(), new PositionOnBoard(0, 0));
             display.displayBoard(board);
-            return Optional.of(board);
+
+            Optional<PlayerId> winner = gameResult.winnerIs(board);
+            if (winner.isPresent() && winner.get().equals(getId())) {
+                display.displayPlayerWon(getId());
+                return Optional.empty();
+            }
+            else
+            {
+                return Optional.of(board);
+            }
         }
         else {
             display.displayInvalidMove();

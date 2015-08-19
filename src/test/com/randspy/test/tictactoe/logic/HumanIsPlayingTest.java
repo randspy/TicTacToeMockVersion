@@ -7,7 +7,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -19,10 +22,12 @@ public class HumanIsPlayingTest {
     @Mock
     private UserInput userInput;
     private Board board;
+    @Mock
+    private GameResult gameResult;
 
     @Before
     public void setUp() throws Exception {
-        player = new HumanPlayer(display, userInput);
+        player = new HumanPlayer(display, userInput, gameResult);
         board = new Board();
     }
 
@@ -38,10 +43,21 @@ public class HumanIsPlayingTest {
     @Test public void validMove(){
 
         when(userInput.getText()).thenReturn("1");
+        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
 
         Board resultBoard = player.makesMove(board).get();
 
         assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(0, 0)), player.getId());
         verify(display).displayBoard(board);
+    }
+
+    @Test public void winningGame() {
+        when(userInput.getText()).thenReturn("1");
+        when(gameResult.winnerIs(board)).thenReturn(Optional.of(player.getId()));
+
+        assertFalse(player.makesMove(board).isPresent());
+
+        verify(display).displayBoard(board);
+        verify(display).displayPlayerWon(player.getId());
     }
 }

@@ -10,4 +10,8 @@ public class Display {
     public void displayBoard(Board board) {
 
     }
+
+    public void displayPlayerWon(PlayerId id) {
+
+    }
 }
