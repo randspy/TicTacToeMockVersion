@@ -18,4 +18,8 @@ public class Display {
     public void displayTie() {
 
     }
+
+    public void displayInstructions() {
+
+    }
 }

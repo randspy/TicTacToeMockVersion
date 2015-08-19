@@ -21,10 +21,12 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
+        display.displayInstructions();
         retrievePosition();
 
         while(!isValidInput()) {
             display.displayInvalidMove();
+            display.displayInstructions();
             retrievePosition();
         }
 

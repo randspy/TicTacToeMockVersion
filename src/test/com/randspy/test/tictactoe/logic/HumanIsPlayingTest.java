@@ -60,6 +60,8 @@ public class HumanIsPlayingTest {
         expectWinner(value);
 
         player.makesMove(board);
+
+        verify(display, times(2)).displayInstructions();
         verify(display).displayInvalidMove();
         verify(display).displayBoard(board);
     }
@@ -71,6 +73,7 @@ public class HumanIsPlayingTest {
         expectWinner(Optional.empty());
 
         player.makesMove(board);
+        verify(display, times(2)).displayInstructions();
         verify(display).displayInvalidMove();
         verify(display).displayBoard(board);
     }
@@ -84,6 +87,8 @@ public class HumanIsPlayingTest {
         Board resultBoard = player.makesMove(board).get();
 
         assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), player.getId());
+
+        verify(display).displayInstructions();
         verify(display).displayBoard(board);
     }
 
@@ -93,6 +98,7 @@ public class HumanIsPlayingTest {
 
         noMoreMovesInGame();
 
+        verify(display).displayInstructions();
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(player.getId());
     }
@@ -104,6 +110,7 @@ public class HumanIsPlayingTest {
 
         noMoreMovesInGame();
 
+        verify(display).displayInstructions();
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(otherPlayerId);
     }
@@ -116,6 +123,7 @@ public class HumanIsPlayingTest {
 
         noMoreMovesInGame();
 
+        verify(display).displayInstructions();
         verify(display).displayBoard(board);
         verify(display).displayTie();
     }
