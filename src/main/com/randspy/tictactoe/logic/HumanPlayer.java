@@ -21,30 +21,31 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
-        retrievePosition();
+        while (true) {
 
-        if(isValidMove())
-        {
-            this.board.setPlayerAtPosition(getId(), new PositionOnBoard(0, 0));
-            display.displayBoard(this.board);
+             retrievePosition();
 
-            Optional<PlayerId> winner = gameResult.winnerIs(this.board);
-            if (winner.isPresent()) {
-                display.displayPlayerWon(winner.get());
-                return Optional.empty();
+            if(isValidMove())
+            {
+                this.board.setPlayerAtPosition(getId(), new PositionOnBoard(0, 0));
+                display.displayBoard(this.board);
+
+                Optional<PlayerId> winner = gameResult.winnerIs(this.board);
+                if (winner.isPresent()) {
+                    display.displayPlayerWon(winner.get());
+                    return Optional.empty();
+                }
+                else if (this.board.isFull()) {
+                    display.displayTie();
+                    return Optional.empty();
+                } else {
+                    return Optional.of(this.board);
+                }
             }
-            else if (this.board.isFull()) {
-                display.displayTie();
-                return Optional.empty();
-            } else {
-                return Optional.of(this.board);
+            else {
+                display.displayInvalidMove();
             }
         }
-        else {
-            display.displayInvalidMove();
-        }
-
-        return null;
     }
 
     private void retrievePosition() {

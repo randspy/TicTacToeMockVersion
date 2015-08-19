@@ -32,21 +32,25 @@ public class HumanIsPlayingTest {
     }
 
     @Test
-    public void invalidMove() {
+    public void invalidMoveIsFallowedByValidOne() {
 
-        when(userInput.getText()).thenReturn("0");
+        when(userInput.getText()).thenReturn("0", "1");
+        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
 
         player.makesMove(board);
         verify(display).displayInvalidMove();
+        verify(display).displayBoard(board);
     }
 
     @Test
     public void invalidInput() {
 
-        when(userInput.getText()).thenReturn("p");
+        when(userInput.getText()).thenReturn("p", "1");
+        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
 
         player.makesMove(board);
         verify(display).displayInvalidMove();
+        verify(display).displayBoard(board);
     }
 
     @Test public void validMove(){
