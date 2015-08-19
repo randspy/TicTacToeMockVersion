@@ -30,6 +30,12 @@ public class HumanPlayer extends Player {
             retrievePosition();
         }
 
+        while (this.board.getPlayerAtPosition(new PositionOnBoard(row, column)) != null) {
+            display.displayFieldIsOccupied();
+            display.displayInstructions();
+            retrievePosition();
+        }
+
         return reactionOnValidInput();
     }
 
