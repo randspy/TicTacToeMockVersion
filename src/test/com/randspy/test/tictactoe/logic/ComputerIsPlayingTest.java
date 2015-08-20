@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.Optional;
 
@@ -35,6 +36,14 @@ public class ComputerIsPlayingTest {
         board.setPlayerAtPosition(null, new PositionOnBoard(0, 0));
     }
 
+    private void expectWinner(Optional<PlayerId> winner) {
+        when(gameResult.winnerIs(board)).thenReturn(winner);
+    }
+
+    private void noMoreMovesInGame() {
+        assertFalse(player.makesMove(board).isPresent());
+    }
+
     @Before
     public void setUp() throws Exception {
         player = new ComputerPlayer(ai, display, gameResult);
@@ -44,8 +53,8 @@ public class ComputerIsPlayingTest {
     @Test
     public void validMove() {
 
-        when(ai.move(board)).thenReturn(new PositionOnBoard(1, 1));
-        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+        expectMoveFromAI(1, 1);
+        expectWinner(Optional.empty());
 
         Board resultBoard = player.makesMove(board).get();
 
@@ -54,13 +63,17 @@ public class ComputerIsPlayingTest {
         verify(display).displayBoard(board);
     }
 
+    private OngoingStubbing<PositionOnBoard> expectMoveFromAI(int row, int column) {
+        return when(ai.move(board)).thenReturn(new PositionOnBoard(row, column));
+    }
+
     @Test
     public void winningGame() {
 
-        when(ai.move(board)).thenReturn(new PositionOnBoard(1, 1));
-        when(gameResult.winnerIs(board)).thenReturn(Optional.of(player.getId()));
+        expectMoveFromAI(1, 1);
+        expectWinner(Optional.of(player.getId()));
 
-        assertFalse(player.makesMove(board).isPresent());
+        noMoreMovesInGame();
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(player.getId());
     }
@@ -68,11 +81,11 @@ public class ComputerIsPlayingTest {
     @Test
     public void loosingGame() {
 
-        when(ai.move(board)).thenReturn(new PositionOnBoard(1, 1));
+        expectMoveFromAI(1, 1);
         PlayerId otherPlayerId = new PlayerId();
-        when(gameResult.winnerIs(board)).thenReturn(Optional.of(otherPlayerId));
+        expectWinner(Optional.of(otherPlayerId));
 
-        assertFalse(player.makesMove(board).isPresent());
+        noMoreMovesInGame();
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(otherPlayerId);
     }
@@ -80,12 +93,12 @@ public class ComputerIsPlayingTest {
     @Test
     public void tieGame() {
 
-        when(ai.move(board)).thenReturn(new PositionOnBoard(0, 0));
-        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+        expectMoveFromAI(0, 0);
+        expectWinner(Optional.empty());
 
         fillBoardToFullExceptFirstOne();
 
-        assertFalse(player.makesMove(board).isPresent());
+        noMoreMovesInGame();
         verify(display).displayBoard(board);
         verify(display).displayTie();
     }
