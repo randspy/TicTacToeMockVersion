@@ -25,6 +25,10 @@ public class ComputerPlayer extends Player {
             display.displayPlayerWon(getId());
             return Optional.empty();
         }
+        else if (board.isFull()){
+            display.displayTie();
+            return Optional.empty();
+        }
         else {
             return Optional.of(board);
         }

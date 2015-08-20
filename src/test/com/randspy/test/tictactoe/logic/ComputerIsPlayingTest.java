@@ -25,6 +25,16 @@ public class ComputerIsPlayingTest {
     @Mock
     private GameResult gameResult;
 
+    private void fillBoardToFullExceptFirstOne() {
+        for (int idx = 0; idx < board.getDimension(); idx++) {
+            for (int idy = 0; idy < board.getDimension(); idy++) {
+                board.setPlayerAtPosition(player.getId(), new PositionOnBoard(idx, idy));
+            }
+        }
+
+        board.setPlayerAtPosition(null, new PositionOnBoard(0, 0));
+    }
+
     @Before
     public void setUp() throws Exception {
         player = new ComputerPlayer(ai, display, gameResult);
@@ -53,5 +63,18 @@ public class ComputerIsPlayingTest {
         assertFalse(player.makesMove(board).isPresent());
         verify(display).displayBoard(board);
         verify(display).displayPlayerWon(player.getId());
+    }
+
+    @Test
+    public void tieGame() {
+
+        when(ai.move(board)).thenReturn(new PositionOnBoard(0, 0));
+        when(gameResult.winnerIs(board)).thenReturn(Optional.empty());
+
+        fillBoardToFullExceptFirstOne();
+
+        assertFalse(player.makesMove(board).isPresent());
+        verify(display).displayBoard(board);
+        verify(display).displayTie();
     }
 }
