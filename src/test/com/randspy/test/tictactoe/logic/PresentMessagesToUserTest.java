@@ -23,7 +23,7 @@ public class PresentMessagesToUserTest {
     private Board generateBoard(PlayerId xPlayerId, PlayerId yPlayerId) {
         Board board = new Board();
         int numberOfFields = board.getDimension() * board.getDimension();
-        for (int idx = 0; idx < numberOfFields; idx++) {
+        for (int idx = 1; idx < numberOfFields; idx++) {
 
             boolean isEven = idx % 2 == 0;
             int row = idx / board.getDimension();
@@ -79,15 +79,15 @@ public class PresentMessagesToUserTest {
         PlayerId xPlayerId = new PlayerId();
         PlayerId yPlayerId = new PlayerId();
 
-        when(mapper.getCharacter(xPlayerId)).thenReturn(Optional.of("x"));
-        when(mapper.getCharacter(yPlayerId)).thenReturn(Optional.of("o"));
+        when(mapper.getCharacter(xPlayerId)).thenReturn("x");
+        when(mapper.getCharacter(yPlayerId)).thenReturn("o");
 
         Board board = generateBoard(xPlayerId, yPlayerId);
 
         display.displayBoard(board);
         verify(render).send(
                 "-------\n" +
-                "|x|o|x|\n" +
+                "| |o|x|\n" +
                 "-------\n" +
                 "|o|x|o|\n" +
                 "-------\n" +

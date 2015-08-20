@@ -26,13 +26,15 @@ public class ConvertPlayerToDisplayedRepresentationTest {
 
     @Test
     public void noMappingToCharacter() {
-        assertFalse(mapping.getCharacter(playerId).isPresent());
+        exception.expect(RuntimeException.class);
+        exception.expectMessage("Missing mapping from player to character");
+        mapping.getCharacter(playerId);
     }
 
     @Test
     public void mappingToCharacter() {
-        mapping.map(playerId, "x");
-        assertEquals("x", mapping.getCharacter(playerId).get());
+        mapping.mapCharacter(playerId, "x");
+        assertEquals("x", mapping.getCharacter(playerId));
     }
 
 

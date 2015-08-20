@@ -53,11 +53,10 @@ public class Display {
         String printedRow = rowSeparator;
 
         for (int idx = 0; idx < board.getDimension(); idx++) {
-            Optional<String> playersCharacter =
-                    mapper.getCharacter(board.getPlayerAtPosition(new PositionOnBoard(row, idx)));
+            PlayerId playerAtPosition = board.getPlayerAtPosition(new PositionOnBoard(row, idx));
 
             final String emptyField = " ";
-            final String gameFiled = playersCharacter.isPresent() ? playersCharacter.get() : emptyField;
+            final String gameFiled = playerAtPosition != null ? mapper.getCharacter(playerAtPosition) : emptyField;
 
             printedRow += gameFiled + rowSeparator;
         }
