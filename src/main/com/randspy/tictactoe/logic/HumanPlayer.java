@@ -25,20 +25,14 @@ public class HumanPlayer extends Player {
         askUserForPosition();
 
         while (true) {
-            if (isValidInput()) {
-                if(this.board.getPlayerAtPosition(new PositionOnBoard(row, column)) != null) {
-                    display.displayFieldIsOccupied();
-                    display.displayInstructions(getId());
-                    askUserForPosition();
-                }
-                else {
-                    return reactionOnValidInput();
-                }
+            if(!isValidInput()){
+                invalidInput();
+            }
+            else if (isFieldAlreadyOccupied()){
+                fieldAlreadyOccupied();
             }
             else{
-                display.displayInvalidMove();
-                display.displayInstructions(getId());
-                askUserForPosition();
+                return validInput();
             }
         }
     }
@@ -67,8 +61,23 @@ public class HumanPlayer extends Player {
         return position >= 0 && position < board.getDimension();
     }
 
-    // TODO REFACTOR this method is possibly doing to many things. Weird name indicates it.
-    private Optional<Board> reactionOnValidInput() {
+    private void invalidInput() {
+        display.displayInvalidMove();
+        display.displayInstructions(getId());
+        askUserForPosition();
+    }
+
+    private boolean isFieldAlreadyOccupied() {
+        return this.board.getPlayerAtPosition(new PositionOnBoard(row, column)) != null;
+    }
+
+    private void fieldAlreadyOccupied() {
+        display.displayFieldIsOccupied();
+        display.displayInstructions(getId());
+        askUserForPosition();
+    }
+
+    private Optional<Board> validInput() {
 
         board.setPlayerAtPosition(getId(), new PositionOnBoard(row, column));
         display.displayBoard(this.board);
@@ -85,6 +94,5 @@ public class HumanPlayer extends Player {
         } else {
             return Optional.of(this.board);
         }
-
     }
 }
