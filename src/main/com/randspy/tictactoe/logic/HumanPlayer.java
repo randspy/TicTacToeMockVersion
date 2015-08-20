@@ -21,14 +21,14 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
-        display.displayInstructions();
+        display.displayInstructions(getId());
         askUserForPosition();
 
         while (true) {
             if (isValidInput()) {
                 if(this.board.getPlayerAtPosition(new PositionOnBoard(row, column)) != null) {
                     display.displayFieldIsOccupied();
-                    display.displayInstructions();
+                    display.displayInstructions(getId());
                     askUserForPosition();
                 }
                 else {
@@ -37,7 +37,7 @@ public class HumanPlayer extends Player {
             }
             else{
                 display.displayInvalidMove();
-                display.displayInstructions();
+                display.displayInstructions(getId());
                 askUserForPosition();
             }
         }

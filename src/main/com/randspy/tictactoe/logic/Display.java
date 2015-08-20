@@ -16,16 +16,16 @@ public class Display {
         render.send("Illegal input.\n");
     }
 
-    public void displayPlayerWon(PlayerId id) {
-        render.send(String.format("%s won\n", mapper.getName(id)));
+    public void displayPlayerWon(PlayerId playerId) {
+        render.send(String.format("%s won\n", mapper.getName(playerId)));
     }
 
     public void displayTie() {
         render.send("There was a tie.\n");
     }
 
-    public void displayInstructions() {
-        render.send("Make move (from 1-9) : ");
+    public void displayInstructions(PlayerId playerId) {
+        render.send(String.format("%s makes move (from 1-9) : ", mapper.getName(playerId)));
     }
 
     public void displayFieldIsOccupied() {

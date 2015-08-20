@@ -40,8 +40,13 @@ public class PresentMessagesToUserTest {
 
     @Test
     public void displayInstructions() {
-        display.displayInstructions();
-        verify(render).send("Make move (from 1-9) : ");
+        PlayerId playerId = new PlayerId();
+        String name = "Human player";
+
+        when(mapper.getName(playerId)).thenReturn(name);
+
+        display.displayInstructions(playerId);
+        verify(render).send("Human player makes move (from 1-9) : ");
     }
 
     @Test
