@@ -66,6 +66,18 @@ public class ComputerIsPlayingTest {
     }
 
     @Test
+    public void loosingGame() {
+
+        when(ai.move(board)).thenReturn(new PositionOnBoard(1, 1));
+        PlayerId otherPlayerId = new PlayerId();
+        when(gameResult.winnerIs(board)).thenReturn(Optional.of(otherPlayerId));
+
+        assertFalse(player.makesMove(board).isPresent());
+        verify(display).displayBoard(board);
+        verify(display).displayPlayerWon(otherPlayerId);
+    }
+
+    @Test
     public void tieGame() {
 
         when(ai.move(board)).thenReturn(new PositionOnBoard(0, 0));

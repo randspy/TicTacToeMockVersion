@@ -22,7 +22,7 @@ public class ComputerPlayer extends Player {
         display.displayBoard(board);
 
         if (playerId.isPresent()) {
-            display.displayPlayerWon(getId());
+            display.displayPlayerWon(playerId.get());
             return Optional.empty();
         }
         else if (board.isFull()){
