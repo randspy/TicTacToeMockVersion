@@ -1,6 +1,7 @@
 package com.randspy.test.tictactoe.logic;
 
 import com.randspy.tictactoe.logic.Player;
+import com.randspy.tictactoe.logic.PlayerId;
 import com.randspy.tictactoe.logic.Players;
 import org.junit.Test;
 
@@ -10,7 +11,7 @@ public class IterateOverPlayersTest {
     @Test
     public void getNextPlayer() {
 
-        Player player = new StubPlayer();
+        Player player = new StubPlayer(new PlayerId());
         Players players = new Players(player);
 
         assertEquals(player, players.next());
@@ -19,8 +20,8 @@ public class IterateOverPlayersTest {
     @Test
     public void getMoreThanOnePlayer() {
 
-        Player playerOne = new StubPlayer();
-        Player playerTwo = new StubPlayer();
+        Player playerOne = new StubPlayer(new PlayerId());
+        Player playerTwo = new StubPlayer(new PlayerId());
         Players players = new Players(playerOne, playerTwo);
 
         assertEquals(playerOne, players.next());
@@ -30,8 +31,8 @@ public class IterateOverPlayersTest {
     @Test
     public void whenListOfPlayersIsWrappedGetFirstPlayerTwice() {
 
-        Player playerOne = new StubPlayer();
-        Player playerTwo = new StubPlayer();
+        Player playerOne = new StubPlayer(new PlayerId());
+        Player playerTwo = new StubPlayer(new PlayerId());
         Players players = new Players(playerOne, playerTwo);
 
         assertEquals(playerOne, players.next());

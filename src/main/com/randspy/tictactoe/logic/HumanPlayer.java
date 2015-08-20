@@ -10,7 +10,8 @@ public class HumanPlayer extends Player {
     private int row;
     private int column;
 
-    public HumanPlayer(Display display, UserInput userInput, GameResult gameResult) {
+    public HumanPlayer(PlayerId playerId, Display display, UserInput userInput, GameResult gameResult) {
+        super(playerId);
         this.display = display;
         this.userInput = userInput;
         this.gameResult = gameResult;

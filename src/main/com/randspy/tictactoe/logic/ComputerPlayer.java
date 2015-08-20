@@ -7,7 +7,8 @@ public class ComputerPlayer extends Player {
     private Display display;
     private GameResult gameResult;
 
-    public ComputerPlayer(MinMax ai, Display display, GameResult gameResult) {
+    public ComputerPlayer(PlayerId playerId, MinMax ai, Display display, GameResult gameResult) {
+        super(playerId);
         this.ai = ai;
         this.display = display;
         this.gameResult = gameResult;

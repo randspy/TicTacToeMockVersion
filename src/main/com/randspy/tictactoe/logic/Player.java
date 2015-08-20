@@ -3,7 +3,11 @@ package com.randspy.tictactoe.logic;
 import java.util.Optional;
 
 public abstract class Player {
-    private PlayerId playerId = new PlayerId();
+    private PlayerId playerId;
+
+    protected Player(PlayerId playerId) {
+        this.playerId = playerId;
+    }
 
     public abstract Optional<Board> makesMove(Board board);
 

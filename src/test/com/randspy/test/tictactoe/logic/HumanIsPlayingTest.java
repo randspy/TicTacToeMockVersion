@@ -36,7 +36,7 @@ public class HumanIsPlayingTest {
 
     @Before
     public void setUp() throws Exception {
-        player = new HumanPlayer(display, userInput, gameResult);
+        player = new HumanPlayer(new PlayerId(), display, userInput, gameResult);
         board = new Board();
     }
 

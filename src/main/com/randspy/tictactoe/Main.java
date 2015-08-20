@@ -12,8 +12,8 @@ public class Main {
         PlayerToDisplayMapper mapper = new PlayerToDisplayMapper();
 
         Display display = new Display(new OutputRender(), mapper);
-        Player playerOne = new HumanPlayer(display, new UserInput(), new GameResult());
-        Player playerTwo = new HumanPlayer(display, new UserInput(), new GameResult());
+        Player playerOne = new HumanPlayer(new PlayerId(), display, new UserInput(), new GameResult());
+        Player playerTwo = new HumanPlayer(new PlayerId(), display, new UserInput(), new GameResult());
 
         mapper.mapName(playerOne.getId(), "Player one");
         mapper.mapCharacter(playerOne.getId(), "x");
