@@ -70,7 +70,7 @@ public class PresentMessagesToUserTest {
         when(mapper.getName(playerId)).thenReturn(name);
 
         display.displayPlayerWon(playerId);
-        verify(render).send(String.format("%s won", name));
+        verify(render).send(String.format("%s won\n", name));
     }
 
     @Test

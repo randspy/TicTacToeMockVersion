@@ -95,6 +95,21 @@ public class HumanIsPlayingTest {
     }
 
     @Test
+    public void alreadyOccupiedFieldIsFallowedByInvalidOne() {
+
+        expectUserInputs("2", "p", "3");
+        expectWinner(Optional.empty());
+
+        board.setPlayerAtPosition(player.getId(), new PositionOnBoard(0, 1));
+
+        player.makesMove(board);
+        verify(display, times(3)).displayInstructions();
+        verify(display).displayFieldIsOccupied();
+        verify(display).displayInvalidMove();
+        verify(display).displayBoard(board);
+    }
+
+    @Test
     public void validMove(){
 
         expectUserInputs("5");

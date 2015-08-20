@@ -17,7 +17,7 @@ public class Display {
     }
 
     public void displayPlayerWon(PlayerId id) {
-        render.send(String.format("%s won", mapper.getName(id)));
+        render.send(String.format("%s won\n", mapper.getName(id)));
     }
 
     public void displayTie() {

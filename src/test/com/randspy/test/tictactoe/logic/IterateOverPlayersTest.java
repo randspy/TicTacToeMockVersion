@@ -37,5 +37,9 @@ public class IterateOverPlayersTest {
         assertEquals(playerOne, players.next());
         assertEquals(playerTwo, players.next());
         assertEquals(playerOne, players.next());
+        assertEquals(playerTwo, players.next());
+        assertEquals(playerOne, players.next());
+        assertEquals(playerTwo, players.next());
+        assertEquals(playerOne, players.next());
     }
 }

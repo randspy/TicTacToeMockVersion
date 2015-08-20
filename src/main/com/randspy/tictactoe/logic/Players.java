@@ -20,7 +20,7 @@ public class Players {
             return players.get(currentPlayerIndex++);
         } else {
             currentPlayerIndex = STARTING_INDEX;
-            return players.get(currentPlayerIndex);
+            return players.get(currentPlayerIndex++);
         }
     }
 }

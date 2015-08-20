@@ -24,10 +24,23 @@ public class HumanPlayer extends Player {
         display.displayInstructions();
         askUserForPosition();
 
-        askForUserInputUntilValidPosition();
-        askForUserInputUntilPositionIsNotOccupied();
-
-        return reactionOnValidInput();
+        while (true) {
+            if (isValidInput()) {
+                if(this.board.getPlayerAtPosition(new PositionOnBoard(row, column)) != null) {
+                    display.displayFieldIsOccupied();
+                    display.displayInstructions();
+                    askUserForPosition();
+                }
+                else {
+                    return reactionOnValidInput();
+                }
+            }
+            else{
+                display.displayInvalidMove();
+                display.displayInstructions();
+                askUserForPosition();
+            }
+        }
     }
 
     private void askUserForPosition() {
@@ -54,22 +67,6 @@ public class HumanPlayer extends Player {
         return position >= 0 && position < board.getDimension();
     }
 
-    private void askForUserInputUntilValidPosition() {
-        while(!isValidInput()) {
-            display.displayInvalidMove();
-            display.displayInstructions();
-            askUserForPosition();
-        }
-    }
-
-    private void askForUserInputUntilPositionIsNotOccupied() {
-        while (board.getPlayerAtPosition(new PositionOnBoard(row, column)) != null) {
-            display.displayFieldIsOccupied();
-            display.displayInstructions();
-            askUserForPosition();
-        }
-    }
-    
     // TODO REFACTOR this method is possibly doing to many things. Weird name indicates it.
     private Optional<Board> reactionOnValidInput() {
 
