@@ -5,6 +5,10 @@ import com.randspy.tictactoe.logic.*;
 public class Main {
     public static void main(String[] args) {
 
+        createHumanToHumanGame().play();
+    }
+
+    private static Game createHumanToHumanGame() {
         PlayerToDisplayMapper mapper = new PlayerToDisplayMapper();
 
         Display display = new Display(new OutputRender(), mapper);
@@ -16,11 +20,9 @@ public class Main {
 
         mapper.mapName(playerTwo.getId(), "Player two");
         mapper.mapCharacter(playerTwo.getId(), "o");
-        
+
 
         Players players = new Players(playerOne, playerTwo);
-        Game game = new Game(players, new Board());
-
-        game.play();
+        return new Game(players, new Board());
     }
 }
