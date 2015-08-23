@@ -7,11 +7,13 @@ public class ComputerPlayer extends Player {
     private Display display;
     private GameResult gameResult;
 
-    public ComputerPlayer(PlayerId playerId, MinMax ai, Display display, GameResult gameResult) {
+    public ComputerPlayer(PlayerId playerId, Display display, GameResult gameResult, MinMax ai) {
+        // TODO : maybe display and gameResult should be located in Player class
+        // it would reduce code duplication, but from other end it would create an additional coupling
         super(playerId);
-        this.ai = ai;
         this.display = display;
         this.gameResult = gameResult;
+        this.ai = ai;
     }
 
     @Override

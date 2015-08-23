@@ -10,11 +10,11 @@ public class HumanPlayer extends Player {
     private int row;
     private int column;
 
-    public HumanPlayer(PlayerId playerId, Display display, UserInput userInput, GameResult gameResult) {
+    public HumanPlayer(PlayerId playerId, Display display, GameResult gameResult, UserInput userInput) {
         super(playerId);
         this.display = display;
-        this.userInput = userInput;
         this.gameResult = gameResult;
+        this.userInput = userInput;
     }
 
     @Override

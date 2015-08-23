@@ -46,7 +46,7 @@ public class ComputerIsPlayingTest {
 
     @Before
     public void setUp() throws Exception {
-        player = new ComputerPlayer(new PlayerId(), ai, display, gameResult);
+        player = new ComputerPlayer(new PlayerId(), display, gameResult, ai);
         board = new Board();
     }
 
