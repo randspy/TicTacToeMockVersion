@@ -36,7 +36,13 @@ public class HumanIsPlayingTest {
 
     @Before
     public void setUp() throws Exception {
-        player = new HumanPlayer(new PlayerId(), display, gameResult, userInput);
+        player = new HumanPlayer.Builder()
+                .withPlayerId(new PlayerId())
+                .withDisplay(display)
+                .withGameResultDecider(gameResult)
+                .withUserInput(userInput)
+                .build();
+
         board = new Board();
     }
 

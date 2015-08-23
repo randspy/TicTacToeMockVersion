@@ -10,11 +10,44 @@ public class HumanPlayer extends Player {
     private int row;
     private int column;
 
-    public HumanPlayer(PlayerId playerId, Display display, GameResult gameResult, UserInput userInput) {
-        super(playerId);
-        this.display = display;
-        this.gameResult = gameResult;
-        this.userInput = userInput;
+    public static class Builder{
+
+        private PlayerId playerId;
+        private Display display;
+        private GameResult gameResult;
+        private UserInput userInput;
+
+        public Builder withPlayerId(PlayerId playerId) {
+            this.playerId = playerId;
+            return this;
+        }
+
+        public Builder withDisplay(Display display) {
+            this.display = display;
+            return this;
+        }
+
+        public Builder withGameResultDecider(GameResult gameResult) {
+            this.gameResult = gameResult;
+            return this;
+        }
+
+        public Builder withUserInput(UserInput userInput) {
+            this.userInput = userInput;
+            return this;
+        }
+
+        public HumanPlayer build() {
+            return new HumanPlayer(this);
+        }
+
+    }
+
+    public HumanPlayer(Builder builder) {
+        super(builder.playerId);
+        this.display = builder.display;
+        this.gameResult = builder.gameResult;
+        this.userInput = builder.userInput;
     }
 
     @Override

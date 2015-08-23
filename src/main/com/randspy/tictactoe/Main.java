@@ -13,14 +13,27 @@ public class Main {
         PlayerToDisplayMapper mapper = new PlayerToDisplayMapper();
 
         Display display = new Display(new OutputRender(), mapper);
-        Player playerOne = new HumanPlayer(new PlayerId(), display, new GameResult(), new UserInput());
-        Player playerTwo = new HumanPlayer(new PlayerId(), display, new GameResult(), new UserInput());
+        PlayerId playerOneId = new PlayerId();
+        Player playerOne = new HumanPlayer.Builder()
+                        .withPlayerId(playerOneId)
+                        .withDisplay(display)
+                        .withGameResultDecider(new GameResult())
+                        .withUserInput(new UserInput())
+                        .build();
 
-        mapper.mapName(playerOne.getId(), "Player one");
-        mapper.mapCharacter(playerOne.getId(), "x");
+        PlayerId playerTwoId = new PlayerId();
+        Player playerTwo = new HumanPlayer.Builder()
+                        .withPlayerId(playerTwoId)
+                        .withDisplay(display)
+                        .withGameResultDecider(new GameResult())
+                        .withUserInput(new UserInput())
+                        .build();
 
-        mapper.mapName(playerTwo.getId(), "Player two");
-        mapper.mapCharacter(playerTwo.getId(), "o");
+        mapper.mapName(playerOneId, "Player one");
+        mapper.mapCharacter(playerOneId, "x");
+
+        mapper.mapName(playerTwoId, "Player two");
+        mapper.mapCharacter(playerTwoId, "o");
 
 
         Players players = new Players(playerOne, playerTwo);
@@ -41,8 +54,12 @@ public class Main {
 
         Display display = new Display(new OutputRender(), mapper);
 
-        Player playerOne = new HumanPlayer(
-                humanPlayerId, display, new GameResult(), new UserInput());
+        Player playerOne = new HumanPlayer.Builder()
+                        .withPlayerId(humanPlayerId)
+                        .withDisplay(display)
+                        .withGameResultDecider(new GameResult())
+                        .withUserInput(new UserInput())
+                        .build();
 
         Player playerTwo = new ComputerPlayer(
                 computerPlayerId, display, new GameResult(), new MinMax(computerPlayerId));
