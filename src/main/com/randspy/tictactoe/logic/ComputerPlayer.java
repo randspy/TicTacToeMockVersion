@@ -13,13 +13,13 @@ public class ComputerPlayer extends Player {
     @Override
     public Optional<Board> makesMove(Board board) {
 
-        board.setPlayerAtPosition(getId(), ai.move(board));
-        Optional<PlayerId> playerId = gameResult.winnerIs(board);
+        board.setPlayerAtPosition(playerId, ai.move(board));
+        Optional<PlayerId> winner = gameResult.winnerIs(board);
 
         display.displayBoard(board);
 
-        if (playerId.isPresent()) {
-            display.displayPlayerWon(playerId.get());
+        if (winner.isPresent()) {
+            display.displayPlayerWon(winner.get());
             return Optional.empty();
         }
         else if (board.isFull()){

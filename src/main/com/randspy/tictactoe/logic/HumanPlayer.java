@@ -18,7 +18,7 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
-        display.displayInstructions(getId());
+        display.displayInstructions(playerId);
         askUserForPosition();
 
         while (true) {
@@ -60,7 +60,7 @@ public class HumanPlayer extends Player {
 
     private void invalidInput() {
         display.displayInvalidMove();
-        display.displayInstructions(getId());
+        display.displayInstructions(playerId);
         askUserForPosition();
     }
 
@@ -70,13 +70,13 @@ public class HumanPlayer extends Player {
 
     private void fieldAlreadyOccupied() {
         display.displayFieldIsOccupied();
-        display.displayInstructions(getId());
+        display.displayInstructions(playerId);
         askUserForPosition();
     }
 
     private Optional<Board> validInput() {
 
-        board.setPlayerAtPosition(getId(), new PositionOnBoard(row, column));
+        board.setPlayerAtPosition(playerId, new PositionOnBoard(row, column));
         display.displayBoard(this.board);
 
         // TODO REFACTOR into more functional style

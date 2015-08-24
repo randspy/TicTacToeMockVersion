@@ -16,10 +16,6 @@ public abstract class Player {
 
     public abstract Optional<Board> makesMove(Board board);
 
-    public PlayerId getId(){
-        return playerId;
-    }
-
     public static class Builder{
 
         private PlayerId playerId;

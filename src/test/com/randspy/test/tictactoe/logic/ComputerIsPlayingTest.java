@@ -25,11 +25,12 @@ public class ComputerIsPlayingTest {
     private Display display;
     @Mock
     private GameResult gameResult;
+    private PlayerId playerId;
 
     private void fillBoardToFullExceptFirstOne() {
         for (int idx = 0; idx < board.getDimension(); idx++) {
             for (int idy = 0; idy < board.getDimension(); idy++) {
-                board.setPlayerAtPosition(player.getId(), new PositionOnBoard(idx, idy));
+                board.setPlayerAtPosition(playerId, new PositionOnBoard(idx, idy));
             }
         }
 
@@ -46,9 +47,10 @@ public class ComputerIsPlayingTest {
 
     @Before
     public void setUp() throws Exception {
+        playerId = new PlayerId();
         player = new ComputerPlayer(
                 new Player.Builder()
-                        .withPlayerId(new PlayerId())
+                        .withPlayerId(playerId)
                         .withDisplay(display)
                         .withGameResultDecider(gameResult), ai);
 
@@ -63,7 +65,7 @@ public class ComputerIsPlayingTest {
 
         Board resultBoard = player.makesMove(board).get();
 
-        assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), player.getId());
+        assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), playerId);
 
         verify(display).displayBoard(board);
     }
@@ -76,11 +78,11 @@ public class ComputerIsPlayingTest {
     public void winningGame() {
 
         expectMoveFromAI(1, 1);
-        expectWinner(Optional.of(player.getId()));
+        expectWinner(Optional.of(playerId));
 
         noMoreMovesInGame();
         verify(display).displayBoard(board);
-        verify(display).displayPlayerWon(player.getId());
+        verify(display).displayPlayerWon(playerId);
     }
 
     @Test
