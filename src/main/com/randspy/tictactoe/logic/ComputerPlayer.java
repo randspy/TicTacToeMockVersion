@@ -4,15 +4,9 @@ import java.util.Optional;
 
 public class ComputerPlayer extends Player {
     private MinMax ai;
-    private Display display;
-    private GameResult gameResult;
 
-    public ComputerPlayer(PlayerId playerId, Display display, GameResult gameResult, MinMax ai) {
-        // TODO : maybe display and gameResult should be located in Player class
-        // it would reduce code duplication, but from other end it would create an additional coupling
-        super(playerId);
-        this.display = display;
-        this.gameResult = gameResult;
+    public ComputerPlayer(Player.Builder builder, MinMax ai) {
+        super(builder);
         this.ai = ai;
     }
 

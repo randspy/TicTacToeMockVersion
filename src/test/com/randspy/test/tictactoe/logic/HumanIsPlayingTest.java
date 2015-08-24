@@ -36,12 +36,12 @@ public class HumanIsPlayingTest {
 
     @Before
     public void setUp() throws Exception {
-        player = new HumanPlayer.Builder()
+        player = new HumanPlayer(
+            new Player.Builder()
                 .withPlayerId(new PlayerId())
                 .withDisplay(display)
-                .withGameResultDecider(gameResult)
-                .withUserInput(userInput)
-                .build();
+                .withGameResultDecider(gameResult),
+            userInput);
 
         board = new Board();
     }

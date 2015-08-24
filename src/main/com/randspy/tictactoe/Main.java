@@ -14,20 +14,21 @@ public class Main {
 
         Display display = new Display(new OutputRender(), mapper);
         PlayerId playerOneId = new PlayerId();
-        Player playerOne = new HumanPlayer.Builder()
+        Player playerOne = new HumanPlayer(
+                new Player.Builder()
                         .withPlayerId(playerOneId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult())
-                        .withUserInput(new UserInput())
-                        .build();
+                        .withGameResultDecider(new GameResult()),
+                new UserInput());
 
         PlayerId playerTwoId = new PlayerId();
-        Player playerTwo = new HumanPlayer.Builder()
+        Player playerTwo = new HumanPlayer(
+                new Player.Builder()
                         .withPlayerId(playerTwoId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult())
-                        .withUserInput(new UserInput())
-                        .build();
+                        .withGameResultDecider(new GameResult()),
+                new UserInput());
+
 
         mapper.mapName(playerOneId, "Player one");
         mapper.mapCharacter(playerOneId, "x");
@@ -54,15 +55,19 @@ public class Main {
 
         Display display = new Display(new OutputRender(), mapper);
 
-        Player playerOne = new HumanPlayer.Builder()
+        Player playerOne = new HumanPlayer(
+                new Player.Builder()
                         .withPlayerId(humanPlayerId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult())
-                        .withUserInput(new UserInput())
-                        .build();
+                        .withGameResultDecider(new GameResult()),
+                new UserInput());
 
         Player playerTwo = new ComputerPlayer(
-                computerPlayerId, display, new GameResult(), new MinMax(computerPlayerId));
+                new Player.Builder()
+                        .withPlayerId(computerPlayerId)
+                        .withDisplay(display)
+                        .withGameResultDecider(new GameResult()),
+                new MinMax(computerPlayerId));
 
         Players players = new Players(playerOne, playerTwo);
         return new Game(players, new Board());

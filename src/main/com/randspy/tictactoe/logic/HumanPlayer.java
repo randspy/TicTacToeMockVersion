@@ -3,51 +3,14 @@ package com.randspy.tictactoe.logic;
 import java.util.Optional;
 
 public class HumanPlayer extends Player {
-    private Display display;
     private UserInput userInput;
-    private GameResult gameResult;
     private Board board;
     private int row;
     private int column;
 
-    public static class Builder{
-
-        private PlayerId playerId;
-        private Display display;
-        private GameResult gameResult;
-        private UserInput userInput;
-
-        public Builder withPlayerId(PlayerId playerId) {
-            this.playerId = playerId;
-            return this;
-        }
-
-        public Builder withDisplay(Display display) {
-            this.display = display;
-            return this;
-        }
-
-        public Builder withGameResultDecider(GameResult gameResult) {
-            this.gameResult = gameResult;
-            return this;
-        }
-
-        public Builder withUserInput(UserInput userInput) {
-            this.userInput = userInput;
-            return this;
-        }
-
-        public HumanPlayer build() {
-            return new HumanPlayer(this);
-        }
-
-    }
-
-    public HumanPlayer(Builder builder) {
-        super(builder.playerId);
-        this.display = builder.display;
-        this.gameResult = builder.gameResult;
-        this.userInput = builder.userInput;
+    public HumanPlayer(Player.Builder builder, UserInput userInput) {
+        super(builder);
+        this.userInput = userInput;
     }
 
     @Override
