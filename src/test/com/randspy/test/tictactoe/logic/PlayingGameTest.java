@@ -3,7 +3,7 @@ package com.randspy.test.tictactoe.logic;
 import com.randspy.tictactoe.logic.Board;
 import com.randspy.tictactoe.logic.Game;
 import com.randspy.tictactoe.logic.Player;
-import com.randspy.tictactoe.logic.Players;
+import com.randspy.tictactoe.logic.PlayersCircularList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +31,7 @@ public class PlayingGameTest {
     public void setUp() throws Exception {
         board = new Board();
         resultBoard = Optional.of(board);
-        game = new Game(new Players(player), board);
+        game = new Game(new PlayersCircularList(player), board);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class PlayingGameTest {
     @Test
     public void manyPlayersMakeMove() {
         Player otherPlayer = mock(Player.class);
-        game = new Game(new Players(player, otherPlayer), board);
+        game = new Game(new PlayersCircularList(player, otherPlayer), board);
 
         when(player.makesMove(resultBoard.get()))
                 .thenReturn(resultBoard, withNoBoardGameIsFinished());

@@ -3,11 +3,11 @@ package com.randspy.tictactoe.logic;
 import java.util.Optional;
 
 public class Game {
-    private Players players;
+    private PlayersCircularList playersCircularList;
     private Board board;
 
-    public Game(Players players, Board board) {
-        this.players = players;
+    public Game(PlayersCircularList playersCircularList, Board board) {
+        this.playersCircularList = playersCircularList;
         this.board = board;
     }
 
@@ -22,7 +22,7 @@ public class Game {
     }
 
     private Optional<Board> makeMove() {
-        return players.next().makesMove(board);
+        return playersCircularList.next().makesMove(board);
     }
 
 }

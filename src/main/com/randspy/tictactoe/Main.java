@@ -37,8 +37,8 @@ public class Main {
         mapper.mapCharacter(playerTwoId, "o");
 
 
-        Players players = new Players(playerOne, playerTwo);
-        return new Game(players, new Board());
+        PlayersCircularList playersCircularList = new PlayersCircularList(playerOne, playerTwo);
+        return new Game(playersCircularList, new Board());
     }
 
     private static Game createHumanToComputerGame() {
@@ -69,7 +69,7 @@ public class Main {
                         .withGameResultDecider(new GameResultDecider()),
                 new MinMax(computerPlayerId));
 
-        Players players = new Players(playerOne, playerTwo);
-        return new Game(players, new Board());
+        PlayersCircularList playersCircularList = new PlayersCircularList(playerOne, playerTwo);
+        return new Game(playersCircularList, new Board());
     }
 }

@@ -3,14 +3,14 @@ package com.randspy.test.tictactoe.logic;
 import com.randspy.tictactoe.logic.Board;
 import com.randspy.tictactoe.logic.Player;
 import com.randspy.tictactoe.logic.PlayerId;
-import com.randspy.tictactoe.logic.Players;
+import com.randspy.tictactoe.logic.PlayersCircularList;
 import org.junit.Test;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-public class IterateOverPlayersTest {
+public class IterateOverPlayersCircularListTest {
 
     public class StubPlayer extends Player {
         protected StubPlayer(Player.Builder builder) {
@@ -32,9 +32,9 @@ public class IterateOverPlayersTest {
     public void getNextPlayer() {
 
         Player player = createPlayer();
-        Players players = new Players(player);
+        PlayersCircularList playersCircularList = new PlayersCircularList(player);
 
-        assertEquals(player, players.next());
+        assertEquals(player, playersCircularList.next());
     }
 
     @Test
@@ -42,10 +42,10 @@ public class IterateOverPlayersTest {
 
         Player playerOne = createPlayer();
         Player playerTwo = createPlayer();
-        Players players = new Players(playerOne, playerTwo);
+        PlayersCircularList playersCircularList = new PlayersCircularList(playerOne, playerTwo);
 
-        assertEquals(playerOne, players.next());
-        assertEquals(playerTwo, players.next());
+        assertEquals(playerOne, playersCircularList.next());
+        assertEquals(playerTwo, playersCircularList.next());
     }
 
     @Test
@@ -53,14 +53,14 @@ public class IterateOverPlayersTest {
 
         Player playerOne = createPlayer();
         Player playerTwo = createPlayer();
-        Players players = new Players(playerOne, playerTwo);
+        PlayersCircularList playersCircularList = new PlayersCircularList(playerOne, playerTwo);
 
-        assertEquals(playerOne, players.next());
-        assertEquals(playerTwo, players.next());
-        assertEquals(playerOne, players.next());
-        assertEquals(playerTwo, players.next());
-        assertEquals(playerOne, players.next());
-        assertEquals(playerTwo, players.next());
-        assertEquals(playerOne, players.next());
+        assertEquals(playerOne, playersCircularList.next());
+        assertEquals(playerTwo, playersCircularList.next());
+        assertEquals(playerOne, playersCircularList.next());
+        assertEquals(playerTwo, playersCircularList.next());
+        assertEquals(playerOne, playersCircularList.next());
+        assertEquals(playerTwo, playersCircularList.next());
+        assertEquals(playerOne, playersCircularList.next());
     }
 }
