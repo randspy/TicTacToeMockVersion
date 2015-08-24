@@ -10,43 +10,43 @@ public class Display {
         this.mapper = mapper;
     }
 
-    public void displayInvalidMove() {
+    public void invalidMove() {
         render.send("Illegal input.\n");
     }
 
-    public void displayPlayerWon(PlayerId playerId) {
+    public void playerWon(PlayerId playerId) {
         render.send(String.format("%s won\n", mapper.getName(playerId)));
     }
 
-    public void displayTie() {
+    public void tie() {
         render.send("There was a tie.\n");
     }
 
-    public void displayInstructions(PlayerId playerId) {
+    public void instructions(PlayerId playerId) {
         render.send(String.format("%s makes move (from 1-9) : ", mapper.getName(playerId)));
     }
 
-    public void displayFieldIsOccupied() {
+    public void fieldIsOccupied() {
         render.send("Already occupied field.\n");
     }
 
-    public void displayBoard(Board board) {
+    public void board(Board board) {
 
         render.send(
-                printHorizontalSeparator() +
-                printRow(board, 0) +
-                printHorizontalSeparator() +
-                printRow(board, 1) +
-                printHorizontalSeparator() +
-                printRow(board, 2) +
-                printHorizontalSeparator());
+                horizontalSeparator() +
+                row(board, 0) +
+                horizontalSeparator() +
+                row(board, 1) +
+                horizontalSeparator() +
+                row(board, 2) +
+                horizontalSeparator());
     }
 
-    private String printHorizontalSeparator() {
+    private String horizontalSeparator() {
         return "-------\n";
     }
 
-    private String printRow(Board board, int row) {
+    private String row(Board board, int row) {
         final String rowSeparator = "|";
         String printedRow = rowSeparator;
 

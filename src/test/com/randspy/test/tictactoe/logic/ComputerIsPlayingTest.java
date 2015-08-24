@@ -68,7 +68,7 @@ public class ComputerIsPlayingTest {
 
         assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), playerId);
 
-        verify(display).displayBoard(board);
+        verify(display).board(board);
     }
 
     private OngoingStubbing<PositionOnBoard> expectMoveFromAI(int row, int column) {
@@ -82,8 +82,8 @@ public class ComputerIsPlayingTest {
         expectWinner(Optional.of(playerId));
 
         noMoreMovesInGame();
-        verify(display).displayBoard(board);
-        verify(display).displayPlayerWon(playerId);
+        verify(display).board(board);
+        verify(display).playerWon(playerId);
     }
 
     @Test
@@ -94,8 +94,8 @@ public class ComputerIsPlayingTest {
         expectWinner(Optional.of(otherPlayerId));
 
         noMoreMovesInGame();
-        verify(display).displayBoard(board);
-        verify(display).displayPlayerWon(otherPlayerId);
+        verify(display).board(board);
+        verify(display).playerWon(otherPlayerId);
     }
 
     @Test
@@ -107,7 +107,7 @@ public class ComputerIsPlayingTest {
         fillBoardToFullExceptFirstOne();
 
         noMoreMovesInGame();
-        verify(display).displayBoard(board);
-        verify(display).displayTie();
+        verify(display).board(board);
+        verify(display).tie();
     }
 }

@@ -16,14 +16,14 @@ public class ComputerPlayer extends Player {
         board.setPlayerAtPosition(playerId, ai.move(board));
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
 
-        display.displayBoard(board);
+        display.board(board);
 
         if (winner.isPresent()) {
-            display.displayPlayerWon(winner.get());
+            display.playerWon(winner.get());
             return Optional.empty();
         }
         else if (board.isFull()){
-            display.displayTie();
+            display.tie();
             return Optional.empty();
         }
         else {

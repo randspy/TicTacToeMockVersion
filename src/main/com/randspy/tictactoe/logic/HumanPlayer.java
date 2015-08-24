@@ -18,7 +18,7 @@ public class HumanPlayer extends Player {
 
         this.board = board;
 
-        display.displayInstructions(playerId);
+        display.instructions(playerId);
         askUserForPosition();
 
         while (true) {
@@ -59,8 +59,8 @@ public class HumanPlayer extends Player {
     }
 
     private void invalidInput() {
-        display.displayInvalidMove();
-        display.displayInstructions(playerId);
+        display.invalidMove();
+        display.instructions(playerId);
         askUserForPosition();
     }
 
@@ -69,24 +69,24 @@ public class HumanPlayer extends Player {
     }
 
     private void fieldAlreadyOccupied() {
-        display.displayFieldIsOccupied();
-        display.displayInstructions(playerId);
+        display.fieldIsOccupied();
+        display.instructions(playerId);
         askUserForPosition();
     }
 
     private Optional<Board> validInput() {
 
         board.setPlayerAtPosition(playerId, new PositionOnBoard(row, column));
-        display.displayBoard(this.board);
+        display.board(this.board);
 
         // TODO REFACTOR into more functional style
         Optional<PlayerId> winner = gameResultDecider.winnerIs(this.board);
         if (winner.isPresent()) {
-            display.displayPlayerWon(winner.get());
+            display.playerWon(winner.get());
             return Optional.empty();
         }
         else if (this.board.isFull()) {
-            display.displayTie();
+            display.tie();
             return Optional.empty();
         } else {
             return Optional.of(this.board);

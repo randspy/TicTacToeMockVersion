@@ -46,25 +46,25 @@ public class PresentMessagesToUserTest {
 
         when(mapper.getName(playerId)).thenReturn(name);
 
-        display.displayInstructions(playerId);
+        display.instructions(playerId);
         verify(render).send("Human player makes move (from 1-9) : ");
     }
 
     @Test
     public void displayTie() {
-        display.displayTie();
+        display.tie();
         verify(render).send("There was a tie.\n");
     }
 
     @Test
     public void displayInvalidMove() {
-        display.displayInvalidMove();
+        display.invalidMove();
         verify(render).send("Illegal input.\n");
     }
 
     @Test
     public void displayFieldIsOccupied() {
-        display.displayFieldIsOccupied();
+        display.fieldIsOccupied();
         verify(render).send("Already occupied field.\n");
     }
 
@@ -75,7 +75,7 @@ public class PresentMessagesToUserTest {
 
         when(mapper.getName(playerId)).thenReturn(name);
 
-        display.displayPlayerWon(playerId);
+        display.playerWon(playerId);
         verify(render).send(String.format("%s won\n", name));
     }
 
@@ -90,7 +90,7 @@ public class PresentMessagesToUserTest {
 
         Board board = generateBoard(xPlayerId, yPlayerId);
 
-        display.displayBoard(board);
+        display.board(board);
         verify(render).send(
                 "-------\n" +
                 "| |o|x|\n" +

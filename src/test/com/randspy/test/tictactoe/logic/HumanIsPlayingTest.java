@@ -77,9 +77,9 @@ public class HumanIsPlayingTest {
 
         player.makesMove(board);
 
-        verify(display, times(2)).displayInstructions(playerId);
-        verify(display).displayInvalidMove();
-        verify(display).displayBoard(board);
+        verify(display, times(2)).instructions(playerId);
+        verify(display).invalidMove();
+        verify(display).board(board);
     }
 
     @Test
@@ -89,9 +89,9 @@ public class HumanIsPlayingTest {
         expectWinner(noWinner());
 
         player.makesMove(board);
-        verify(display, times(2)).displayInstructions(playerId);
-        verify(display).displayInvalidMove();
-        verify(display).displayBoard(board);
+        verify(display, times(2)).instructions(playerId);
+        verify(display).invalidMove();
+        verify(display).board(board);
     }
 
     @Test
@@ -103,9 +103,9 @@ public class HumanIsPlayingTest {
         makeBoardOccupiedAtSecondPosition();
 
         player.makesMove(board);
-        verify(display, times(2)).displayInstructions(playerId);
-        verify(display).displayFieldIsOccupied();
-        verify(display).displayBoard(board);
+        verify(display, times(2)).instructions(playerId);
+        verify(display).fieldIsOccupied();
+        verify(display).board(board);
     }
 
     @Test
@@ -117,10 +117,10 @@ public class HumanIsPlayingTest {
         makeBoardOccupiedAtSecondPosition();
 
         player.makesMove(board);
-        verify(display, times(3)).displayInstructions(playerId);
-        verify(display).displayFieldIsOccupied();
-        verify(display).displayInvalidMove();
-        verify(display).displayBoard(board);
+        verify(display, times(3)).instructions(playerId);
+        verify(display).fieldIsOccupied();
+        verify(display).invalidMove();
+        verify(display).board(board);
     }
 
     @Test
@@ -133,8 +133,8 @@ public class HumanIsPlayingTest {
 
         assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), playerId);
 
-        verify(display).displayInstructions(playerId);
-        verify(display).displayBoard(board);
+        verify(display).instructions(playerId);
+        verify(display).board(board);
     }
 
     @Test public void winningGame() {
@@ -143,9 +143,9 @@ public class HumanIsPlayingTest {
 
         noMoreMovesInGame();
 
-        verify(display).displayInstructions(playerId);
-        verify(display).displayBoard(board);
-        verify(display).displayPlayerWon(playerId);
+        verify(display).instructions(playerId);
+        verify(display).board(board);
+        verify(display).playerWon(playerId);
     }
 
     @Test public void loosingGame() {
@@ -155,9 +155,9 @@ public class HumanIsPlayingTest {
 
         noMoreMovesInGame();
 
-        verify(display).displayInstructions(playerId);
-        verify(display).displayBoard(board);
-        verify(display).displayPlayerWon(otherPlayerId);
+        verify(display).instructions(playerId);
+        verify(display).board(board);
+        verify(display).playerWon(otherPlayerId);
     }
 
     @Test public void tieGame() {
@@ -168,8 +168,8 @@ public class HumanIsPlayingTest {
 
         noMoreMovesInGame();
 
-        verify(display).displayInstructions(playerId);
-        verify(display).displayBoard(board);
-        verify(display).displayTie();
+        verify(display).instructions(playerId);
+        verify(display).board(board);
+        verify(display).tie();
     }
 }
