@@ -7,8 +7,8 @@ import com.randspy.tictactoe.logic.PlayerId;
 import java.util.Optional;
 
 public class StubPlayer extends Player {
-    protected StubPlayer(PlayerId playerId) {
-        super(playerId);
+    protected StubPlayer(Player.Builder builder) {
+        super(builder);
     }
 
     @Override

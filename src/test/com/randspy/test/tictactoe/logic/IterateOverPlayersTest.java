@@ -8,10 +8,11 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class IterateOverPlayersTest {
+
     @Test
     public void getNextPlayer() {
 
-        Player player = new StubPlayer(new PlayerId());
+        Player player = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
         Players players = new Players(player);
 
         assertEquals(player, players.next());
@@ -20,8 +21,8 @@ public class IterateOverPlayersTest {
     @Test
     public void getMoreThanOnePlayer() {
 
-        Player playerOne = new StubPlayer(new PlayerId());
-        Player playerTwo = new StubPlayer(new PlayerId());
+        Player playerOne = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
+        Player playerTwo = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
         Players players = new Players(playerOne, playerTwo);
 
         assertEquals(playerOne, players.next());
@@ -31,8 +32,8 @@ public class IterateOverPlayersTest {
     @Test
     public void whenListOfPlayersIsWrappedGetFirstPlayerTwice() {
 
-        Player playerOne = new StubPlayer(new PlayerId());
-        Player playerTwo = new StubPlayer(new PlayerId());
+        Player playerOne = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
+        Player playerTwo = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
         Players players = new Players(playerOne, playerTwo);
 
         assertEquals(playerOne, players.next());

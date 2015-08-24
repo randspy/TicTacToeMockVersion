@@ -3,13 +3,9 @@ package com.randspy.tictactoe.logic;
 import java.util.Optional;
 
 public abstract class Player {
-    private PlayerId playerId;
+    protected PlayerId playerId;
     protected Display display;
     protected GameResult gameResult;
-
-    protected Player(PlayerId playerId) {
-        this.playerId = playerId;
-    }
 
     protected Player(Builder builder) {
 
