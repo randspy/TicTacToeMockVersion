@@ -5,13 +5,13 @@ import java.util.Optional;
 public abstract class Player {
     protected PlayerId playerId;
     protected Display display;
-    protected GameResult gameResult;
+    protected GameResultDecider gameResultDecider;
 
     protected Player(Builder builder) {
 
         this.playerId = builder.playerId;
         this.display = builder.display;
-        this.gameResult = builder.gameResult;
+        this.gameResultDecider = builder.gameResultDecider;
     }
 
     public abstract Optional<Board> makesMove(Board board);
@@ -20,7 +20,7 @@ public abstract class Player {
 
         private PlayerId playerId;
         private Display display;
-        private GameResult gameResult;
+        private GameResultDecider gameResultDecider;
 
         public Builder withPlayerId(PlayerId playerId) {
             this.playerId = playerId;
@@ -32,8 +32,8 @@ public abstract class Player {
             return this;
         }
 
-        public Builder withGameResultDecider(GameResult gameResult) {
-            this.gameResult = gameResult;
+        public Builder withGameResultDecider(GameResultDecider gameResultDecider) {
+            this.gameResultDecider = gameResultDecider;
             return this;
         }
     }

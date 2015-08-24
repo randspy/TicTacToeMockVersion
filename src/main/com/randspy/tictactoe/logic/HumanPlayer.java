@@ -80,7 +80,7 @@ public class HumanPlayer extends Player {
         display.displayBoard(this.board);
 
         // TODO REFACTOR into more functional style
-        Optional<PlayerId> winner = gameResult.winnerIs(this.board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(this.board);
         if (winner.isPresent()) {
             display.displayPlayerWon(winner.get());
             return Optional.empty();

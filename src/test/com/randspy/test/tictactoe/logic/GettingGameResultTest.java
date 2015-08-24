@@ -13,7 +13,7 @@ import static org.junit.Assert.assertTrue;
 public class GettingGameResultTest {
 
     private Board board;
-    private GameResult gameResult;
+    private GameResultDecider gameResultDecider;
 
     private void setRowWithWinningPlayer(PlayerId playerId, int rowNumber) {
         for (int idx = 0; idx < board.getDimension(); idx++) {
@@ -43,13 +43,13 @@ public class GettingGameResultTest {
     @Before
     public void setUp() throws Exception {
         board = new Board();
-        gameResult = new GameResult();
+        gameResultDecider = new GameResultDecider();
     }
 
 
     @Test
     public void noWinner() {
-        assertFalse(gameResult.winnerIs(board).isPresent());
+        assertFalse(gameResultDecider.winnerIs(board).isPresent());
     }
 
     @Test
@@ -59,7 +59,7 @@ public class GettingGameResultTest {
 
         setRowWithWinningPlayer(playerId, 0);
 
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
         assertTrue(winner.isPresent());
         assertEquals(playerId, winner.get());
     }
@@ -71,7 +71,7 @@ public class GettingGameResultTest {
 
         setRowWithWinningPlayer(playerId, 1);
 
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
         assertTrue(winner.isPresent());
         assertEquals(playerId, winner.get());
     }
@@ -83,7 +83,7 @@ public class GettingGameResultTest {
 
         setColumnWithWinningPlayer(playerId, 1);
 
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
         assertTrue(winner.isPresent());
         assertEquals(playerId, winner.get());
     }
@@ -95,7 +95,7 @@ public class GettingGameResultTest {
 
         setDiagonalFromLeftToRightWithWinningPlayer(playerId);
 
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
         assertTrue(winner.isPresent());
         assertEquals(playerId, winner.get());
     }
@@ -107,7 +107,7 @@ public class GettingGameResultTest {
 
         setDiagonalFromRightToLeftWithWinningPlayer(playerId);
 
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
         assertTrue(winner.isPresent());
         assertEquals(playerId, winner.get());
     }
@@ -121,7 +121,7 @@ public class GettingGameResultTest {
         setRowWithWinningPlayer(winningPlayerId, 2);
         board.setPlayerAtPosition(losingPlayerId, new PositionOnBoard(0, 0));
 
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
         assertTrue(winner.isPresent());
         assertEquals(winningPlayerId, winner.get());
     }

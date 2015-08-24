@@ -24,7 +24,7 @@ public class ComputerIsPlayingTest {
     @Mock
     private Display display;
     @Mock
-    private GameResult gameResult;
+    private GameResultDecider gameResultDecider;
     private PlayerId playerId;
 
     private void fillBoardToFullExceptFirstOne() {
@@ -38,7 +38,7 @@ public class ComputerIsPlayingTest {
     }
 
     private void expectWinner(Optional<PlayerId> winner) {
-        when(gameResult.winnerIs(board)).thenReturn(winner);
+        when(gameResultDecider.winnerIs(board)).thenReturn(winner);
     }
 
     private void noMoreMovesInGame() {
@@ -52,7 +52,8 @@ public class ComputerIsPlayingTest {
                 new Player.Builder()
                         .withPlayerId(playerId)
                         .withDisplay(display)
-                        .withGameResultDecider(gameResult), ai);
+                        .withGameResultDecider(gameResultDecider),
+                ai);
 
         board = new Board();
     }

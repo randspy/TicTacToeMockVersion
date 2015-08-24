@@ -3,7 +3,7 @@ package com.randspy.tictactoe.logic;
 import com.randspy.tictactoe.logic.Board;import com.randspy.tictactoe.logic.PlayerId;import java.util.Arrays;
 import java.util.Optional;
 
-public class GameResult {
+public class GameResultDecider {
     private Optional<PlayerId> result;
     private Board board;
 

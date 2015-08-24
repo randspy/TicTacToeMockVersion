@@ -18,7 +18,7 @@ public class Main {
                 new Player.Builder()
                         .withPlayerId(playerOneId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult()),
+                        .withGameResultDecider(new GameResultDecider()),
                 new UserInput());
 
         PlayerId playerTwoId = new PlayerId();
@@ -26,7 +26,7 @@ public class Main {
                 new Player.Builder()
                         .withPlayerId(playerTwoId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult()),
+                        .withGameResultDecider(new GameResultDecider()),
                 new UserInput());
 
 
@@ -59,14 +59,14 @@ public class Main {
                 new Player.Builder()
                         .withPlayerId(humanPlayerId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult()),
+                        .withGameResultDecider(new GameResultDecider()),
                 new UserInput());
 
         Player playerTwo = new ComputerPlayer(
                 new Player.Builder()
                         .withPlayerId(computerPlayerId)
                         .withDisplay(display)
-                        .withGameResultDecider(new GameResult()),
+                        .withGameResultDecider(new GameResultDecider()),
                 new MinMax(computerPlayerId));
 
         Players players = new Players(playerOne, playerTwo);

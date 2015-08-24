@@ -5,7 +5,7 @@ import java.util.Set;
 public class MinMax {
 
     private PlayerId opponent;
-    private GameResult gameResult = new GameResult();
+    private GameResultDecider gameResultDecider = new GameResultDecider();
     private Board board;
     private PlayerId playerId;
 
@@ -72,13 +72,13 @@ public class MinMax {
     }
 
     private boolean noMoreMovesPossible(int depth) {
-        return board.isFull() || gameResult.winnerIs(board).isPresent() || depth == 0;
+        return board.isFull() || gameResultDecider.winnerIs(board).isPresent() || depth == 0;
     }
 
     private int score(int depth) {
-        if (!gameResult.winnerIs(board).isPresent()) {
+        if (!gameResultDecider.winnerIs(board).isPresent()) {
             return 0;
-        } else if (gameResult.winnerIs(board).get() == this.playerId) {
+        } else if (gameResultDecider.winnerIs(board).get() == this.playerId) {
             return depth + 1;
         } else {
             return -depth - 1;

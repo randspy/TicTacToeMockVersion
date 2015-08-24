@@ -14,7 +14,7 @@ public class ComputerPlayer extends Player {
     public Optional<Board> makesMove(Board board) {
 
         board.setPlayerAtPosition(playerId, ai.move(board));
-        Optional<PlayerId> winner = gameResult.winnerIs(board);
+        Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
 
         display.displayBoard(board);
 

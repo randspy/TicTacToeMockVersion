@@ -24,7 +24,7 @@ public class HumanIsPlayingTest {
     private UserInput userInput;
     private Board board;
     @Mock
-    private GameResult gameResult;
+    private GameResultDecider gameResultDecider;
     private PlayerId playerId;
 
     private void noMoreMovesInGame() {
@@ -42,14 +42,14 @@ public class HumanIsPlayingTest {
             new Player.Builder()
                 .withPlayerId(playerId)
                 .withDisplay(display)
-                .withGameResultDecider(gameResult),
+                .withGameResultDecider(gameResultDecider),
             userInput);
 
         board = new Board();
     }
 
     private OngoingStubbing<Optional<PlayerId>> expectWinner(Optional<PlayerId> value) {
-        return when(gameResult.winnerIs(board)).thenReturn(value);
+        return when(gameResultDecider.winnerIs(board)).thenReturn(value);
     }
 
     private void fillBoardToFullExceptFirstOne() {
