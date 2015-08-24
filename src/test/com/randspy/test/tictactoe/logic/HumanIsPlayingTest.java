@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
 
 import java.util.Optional;
 
@@ -48,8 +47,16 @@ public class HumanIsPlayingTest {
         board = new Board();
     }
 
-    private OngoingStubbing<Optional<PlayerId>> expectWinner(Optional<PlayerId> value) {
-        return when(gameResultDecider.winnerIs(board)).thenReturn(value);
+    private void expectWinner(Optional<PlayerId> value) {
+        when(gameResultDecider.winnerIs(board)).thenReturn(value);
+    }
+
+    private Optional<PlayerId> noWinner() {
+        return Optional.empty();
+    }
+
+    private void makeBoardOccupiedAtSecondPosition() {
+        board.setPlayerAtPosition(playerId, new PositionOnBoard(0, 1));
     }
 
     private void fillBoardToFullExceptFirstOne() {
@@ -66,8 +73,7 @@ public class HumanIsPlayingTest {
     public void invalidMoveIsFallowedByValidOne() {
 
         expectUserInputs("0", "1");
-        Optional<PlayerId> value = Optional.empty();
-        expectWinner(value);
+        expectWinner(noWinner());
 
         player.makesMove(board);
 
@@ -80,7 +86,7 @@ public class HumanIsPlayingTest {
     public void invalidInputIsFallowedByValidOne() {
 
         expectUserInputs("p", "1");
-        expectWinner(Optional.empty());
+        expectWinner(noWinner());
 
         player.makesMove(board);
         verify(display, times(2)).displayInstructions(playerId);
@@ -92,9 +98,9 @@ public class HumanIsPlayingTest {
     public void alreadyOccupiedFieldIsFallowedByValidOne() {
 
         expectUserInputs("2", "3");
-        expectWinner(Optional.empty());
+        expectWinner(noWinner());
 
-        board.setPlayerAtPosition(playerId, new PositionOnBoard(0, 1));
+        makeBoardOccupiedAtSecondPosition();
 
         player.makesMove(board);
         verify(display, times(2)).displayInstructions(playerId);
@@ -103,12 +109,12 @@ public class HumanIsPlayingTest {
     }
 
     @Test
-    public void alreadyOccupiedFieldIsFallowedByInvalidOne() {
+    public void alreadyOccupiedFieldIsFallowedByInvalidOneAndValidOne() {
 
         expectUserInputs("2", "p", "3");
-        expectWinner(Optional.empty());
+        expectWinner(noWinner());
 
-        board.setPlayerAtPosition(playerId, new PositionOnBoard(0, 1));
+        makeBoardOccupiedAtSecondPosition();
 
         player.makesMove(board);
         verify(display, times(3)).displayInstructions(playerId);
@@ -121,7 +127,7 @@ public class HumanIsPlayingTest {
     public void validMove(){
 
         expectUserInputs("5");
-        expectWinner(Optional.empty());
+        expectWinner(noWinner());
 
         Board resultBoard = player.makesMove(board).get();
 
@@ -156,7 +162,7 @@ public class HumanIsPlayingTest {
 
     @Test public void tieGame() {
         expectUserInputs("1");
-        expectWinner(Optional.empty());
+        expectWinner(noWinner());
 
         fillBoardToFullExceptFirstOne();
 

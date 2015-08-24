@@ -21,12 +21,17 @@ public class IterateOverPlayersTest {
         public Optional<Board> makesMove(Board board) {
             return null;
         }
-    };
+    }
+
+    private Player createPlayer() {
+        return new StubPlayer(
+                new Player.Builder().withPlayerId(new PlayerId()));
+    }
 
     @Test
     public void getNextPlayer() {
 
-        Player player = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
+        Player player = createPlayer();
         Players players = new Players(player);
 
         assertEquals(player, players.next());
@@ -35,8 +40,8 @@ public class IterateOverPlayersTest {
     @Test
     public void getMoreThanOnePlayer() {
 
-        Player playerOne = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
-        Player playerTwo = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
+        Player playerOne = createPlayer();
+        Player playerTwo = createPlayer();
         Players players = new Players(playerOne, playerTwo);
 
         assertEquals(playerOne, players.next());
@@ -46,8 +51,8 @@ public class IterateOverPlayersTest {
     @Test
     public void whenListOfPlayersIsWrappedGetFirstPlayerTwice() {
 
-        Player playerOne = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
-        Player playerTwo = new StubPlayer(new Player.Builder().withPlayerId(new PlayerId()));
+        Player playerOne = createPlayer();
+        Player playerTwo = createPlayer();
         Players players = new Players(playerOne, playerTwo);
 
         assertEquals(playerOne, players.next());

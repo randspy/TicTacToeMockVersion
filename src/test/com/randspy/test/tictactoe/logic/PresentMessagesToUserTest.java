@@ -7,9 +7,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Optional;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresentMessagesToUserTest {
@@ -28,7 +27,9 @@ public class PresentMessagesToUserTest {
             boolean isEven = idx % 2 == 0;
             int row = idx / board.getDimension();
             int column = idx % board.getDimension();
-            board.setPlayerAtPosition(isEven ? xPlayerId :yPlayerId, new PositionOnBoard(row, column));
+            board.setPlayerAtPosition(
+                    isEven ? xPlayerId :yPlayerId,
+                    new PositionOnBoard(row, column));
         }
         return board;
     }

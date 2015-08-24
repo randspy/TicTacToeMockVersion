@@ -1,7 +1,5 @@
 package com.randspy.tictactoe.logic;
 
-import java.util.Optional;
-
 public class Display {
     private OutputRender render;
     private PlayerToDisplayMapper mapper;
@@ -56,7 +54,8 @@ public class Display {
             PlayerId playerAtPosition = board.getPlayerAtPosition(new PositionOnBoard(row, idx));
 
             final String emptyField = " ";
-            final String gameFiled = playerAtPosition != null ? mapper.getCharacter(playerAtPosition) : emptyField;
+            final String gameFiled = playerAtPosition != null ?
+                    mapper.getCharacter(playerAtPosition) : emptyField;
 
             printedRow += gameFiled + rowSeparator;
         }
