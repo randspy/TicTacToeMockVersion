@@ -42,7 +42,7 @@ public class ComputerIsPlayingTest {
     }
 
     private void noMoreMovesInGame() {
-        assertFalse(player.makesMove(board).isPresent());
+        assertFalse(player.makesMove(board).isInProgress());
     }
 
     @Before
@@ -64,7 +64,7 @@ public class ComputerIsPlayingTest {
         expectMoveFromAI(1, 1);
         expectWinner(Optional.empty());
 
-        Board resultBoard = player.makesMove(board).get();
+        Board resultBoard = player.makesMove(board).board();
 
         assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), playerId);
 

@@ -1,7 +1,5 @@
 package com.randspy.tictactoe.logic;
 
-import java.util.Optional;
-
 public class Game {
     private PlayersCircularList playersCircularList;
     private Board board;
@@ -12,12 +10,11 @@ public class Game {
     }
 
     public void play() {
+        GameState newGameState = makeMove();
 
-        Optional<Board> resultBoardAfterMove = makeMove().board();
-
-        while (resultBoardAfterMove.isPresent()) {
-            board = resultBoardAfterMove.get();
-            resultBoardAfterMove = makeMove().board();
+        while (newGameState.isInProgress()) {
+            board = newGameState.board();
+            newGameState = makeMove();
         }
     }
 

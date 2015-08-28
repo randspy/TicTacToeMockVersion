@@ -27,7 +27,7 @@ public class HumanIsPlayingTest {
     private PlayerId playerId;
 
     private void noMoreMovesInGame() {
-        assertFalse(player.makesMove(board).isPresent());
+        assertFalse(player.makesMove(board).isInProgress());
     }
 
     private void expectUserInputs(String value, String... values) {
@@ -129,7 +129,7 @@ public class HumanIsPlayingTest {
         expectUserInputs("5");
         expectWinner(noWinner());
 
-        Board resultBoard = player.makesMove(board).get();
+        Board resultBoard = player.makesMove(board).board();
 
         assertEquals(resultBoard.getPlayerAtPosition(new PositionOnBoard(1, 1)), playerId);
 

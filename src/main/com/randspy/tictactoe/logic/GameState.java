@@ -12,15 +12,11 @@ public class GameState {
         this.gameProgress = gameProgress;
     }
 
-    public Optional<Board> board() {
-        return isPresent() ? Optional.ofNullable(board) : Optional.<Board>empty();
-    }
-
-    public boolean isPresent() {
+    public boolean isInProgress() {
         return gameProgress == GameProgress.InProgress;
     }
 
-    public Board get() {
+    public Board board() {
         return board;
     }
 }

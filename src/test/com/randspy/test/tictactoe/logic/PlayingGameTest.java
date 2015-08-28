@@ -7,8 +7,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Optional;
-
 import static org.mockito.Mockito.*;
 
 @SuppressWarnings("unchecked")
@@ -36,7 +34,7 @@ public class PlayingGameTest {
         when(player.makesMove(board)).thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove(gameState.get());
+        verify(player).makesMove(gameState.board());
     }
 
     @Test
@@ -45,7 +43,7 @@ public class PlayingGameTest {
                 .thenReturn(gameState, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(2)).makesMove(gameState.get());
+        verify(player, times(2)).makesMove(gameState.board());
     }
 
     @Test
@@ -54,7 +52,7 @@ public class PlayingGameTest {
                 .thenReturn(gameState, gameState, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(3)).makesMove(gameState.get());
+        verify(player, times(3)).makesMove(gameState.board());
     }
 
     @Test
@@ -70,8 +68,8 @@ public class PlayingGameTest {
 
         game.play();
 
-        verify(player, times(2)).makesMove(gameState.get());
-        verify(otherPlayer, times(1)).makesMove(gameState.get());
+        verify(player, times(2)).makesMove(gameState.board());
+        verify(otherPlayer, times(1)).makesMove(gameState.board());
     }
 
     @Test
@@ -86,7 +84,7 @@ public class PlayingGameTest {
                 .thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove(gameState.get());
-        verify(player).makesMove(gameStateAfterMove.get());
+        verify(player).makesMove(gameState.board());
+        verify(player).makesMove(gameStateAfterMove.board());
     }
 }
