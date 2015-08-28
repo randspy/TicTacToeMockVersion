@@ -29,8 +29,8 @@ public class HumanPlayer extends Player {
                 fieldAlreadyOccupied();
             }
             else {
-                Optional<Board> newBoard = validInput() == GameProgress.Finished ? Optional.empty() : Optional.of(this.board);
-                return new GameState(newBoard);
+                GameProgress gameProgress = validInput();
+                return new GameState(board, gameProgress);
             }
         }
     }

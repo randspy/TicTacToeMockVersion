@@ -7,18 +7,13 @@ public class GameState {
     private final Board board;
     private final GameProgress gameProgress;
 
-    public GameState(Optional<Board> board) {
-        this(board.orElse(null), board.isPresent() ? GameProgress.InProgress : GameProgress.Finished);
-    }
-
     public GameState(Board board, GameProgress gameProgress) {
-
         this.board = board;
         this.gameProgress = gameProgress;
     }
 
     public Optional<Board> board() {
-        return Optional.ofNullable(board);
+        return isPresent() ? Optional.ofNullable(board) : Optional.<Board>empty();
     }
 
     public boolean isPresent() {

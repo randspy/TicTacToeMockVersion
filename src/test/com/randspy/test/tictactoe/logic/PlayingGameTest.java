@@ -21,7 +21,7 @@ public class PlayingGameTest {
     private GameState gameState;
 
     private GameState withNoBoardGameIsFinished() {
-        return new GameState(Optional.<Board>empty());
+        return new GameState(board, GameProgress.Finished);
     }
 
     @Before
@@ -77,7 +77,7 @@ public class PlayingGameTest {
     @Test
     public void boardFromPlayerMoveShouldBeUsedAsInputForNextMove() {
         Board boardAfterMove = new Board();
-        GameState gameStateAfterMove = new GameState(Optional.of(boardAfterMove));
+        GameState gameStateAfterMove = new GameState(boardAfterMove, GameProgress.InProgress);
 
         when(player.makesMove(board))
                 .thenReturn(gameStateAfterMove);

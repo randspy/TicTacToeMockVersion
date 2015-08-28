@@ -20,14 +20,14 @@ public class ComputerPlayer extends Player {
 
         if (winner.isPresent()) {
             display.playerWon(winner.get());
-            return new GameState(Optional.empty());
+            return new GameState(board, GameProgress.Finished);
         }
         else if (board.isFull()){
             display.tie();
-            return new GameState(Optional.empty());
+            return new GameState(board, GameProgress.Finished);
         }
         else {
-            return new GameState(Optional.of(board));
+            return new GameState(board, GameProgress.InProgress);
         }
     }
 }
