@@ -1,25 +1,21 @@
 package com.randspy.tictactoe.logic;
 
 public class Game {
-    private PlayersCircularList playersCircularList;
-    private Board board;
+    private final PlayersCircularList playersCircularList;
+    private GameState gameState;
 
-    public Game(PlayersCircularList playersCircularList, Board board) {
+    public Game(PlayersCircularList playersCircularList, Board initialBoard) {
         this.playersCircularList = playersCircularList;
-        this.board = board;
+        this.gameState = new GameState(initialBoard, GameProgress.InProgress);
     }
 
     public void play() {
-        GameState newGameState = makeMove();
-
-        while (newGameState.isInProgress()) {
-            board = newGameState.board();
-            newGameState = makeMove();
+        while (gameState.isInProgress()) {
+            gameState = makeMove(gameState.board());
         }
     }
 
-    private GameState makeMove() {
+    private GameState makeMove(Board board) {
         return playersCircularList.next().makesMove(board);
     }
-
 }
