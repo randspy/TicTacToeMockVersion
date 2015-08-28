@@ -29,7 +29,7 @@ public class HumanPlayer extends Player {
                 fieldAlreadyOccupied();
             }
             else {
-                Optional<Board> newBoard = validInput() == NextStep.Stop ? Optional.empty() : Optional.of(this.board);
+                Optional<Board> newBoard = validInput() == GameProgress.Finished ? Optional.empty() : Optional.of(this.board);
                 return new GameState(newBoard);
             }
         }
@@ -75,7 +75,7 @@ public class HumanPlayer extends Player {
         askUserForPosition();
     }
 
-    private NextStep validInput() {
+    private GameProgress validInput() {
 
         board.setPlayerAtPosition(playerId, new PositionOnBoard(row, column));
         display.board(this.board);
@@ -84,18 +84,14 @@ public class HumanPlayer extends Player {
         Optional<PlayerId> winner = gameResultDecider.winnerIs(this.board);
         if (winner.isPresent()) {
             display.playerWon(winner.get());
-            return NextStep.Stop;
+            return GameProgress.Finished;
         }
         else if (this.board.isFull()) {
             display.tie();
-            return NextStep.Stop;
+            return GameProgress.Finished;
         } else {
-            return NextStep.Continue;
+            return GameProgress.InProgress;
         }
     }
 
-    public enum NextStep {
-        Continue,
-        Stop
-    }
 }

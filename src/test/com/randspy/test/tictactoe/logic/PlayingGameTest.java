@@ -27,7 +27,7 @@ public class PlayingGameTest {
     @Before
     public void setUp() throws Exception {
         board = new Board();
-        gameState = new GameState(Optional.of(board));
+        gameState = new GameState(board, GameProgress.InProgress);
         game = new Game(new PlayersCircularList(player), board);
     }
 
