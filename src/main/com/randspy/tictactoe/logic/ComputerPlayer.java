@@ -11,7 +11,7 @@ public class ComputerPlayer extends Player {
     }
 
     @Override
-    public Optional<Board> makesMove(Board board) {
+    public GameState makesMove(Board board) {
 
         board.setPlayerAtPosition(playerId, ai.move(board));
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
@@ -20,14 +20,14 @@ public class ComputerPlayer extends Player {
 
         if (winner.isPresent()) {
             display.playerWon(winner.get());
-            return Optional.empty();
+            return new GameState(Optional.empty());
         }
         else if (board.isFull()){
             display.tie();
-            return Optional.empty();
+            return new GameState(Optional.empty());
         }
         else {
-            return Optional.of(board);
+            return new GameState(Optional.of(board));
         }
     }
 }

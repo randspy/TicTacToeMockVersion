@@ -13,15 +13,15 @@ public class Game {
 
     public void play() {
 
-        Optional<Board> resultBoardAfterMove = makeMove();
+        Optional<Board> resultBoardAfterMove = makeMove().board();
 
         while (resultBoardAfterMove.isPresent()) {
             board = resultBoardAfterMove.get();
-            resultBoardAfterMove = makeMove();
+            resultBoardAfterMove = makeMove().board();
         }
     }
 
-    private Optional<Board> makeMove() {
+    private GameState makeMove() {
         return playersCircularList.next().makesMove(board);
     }
 

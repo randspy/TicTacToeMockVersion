@@ -1,9 +1,6 @@
 package com.randspy.test.tictactoe.logic;
 
-import com.randspy.tictactoe.logic.Board;
-import com.randspy.tictactoe.logic.Game;
-import com.randspy.tictactoe.logic.Player;
-import com.randspy.tictactoe.logic.PlayersCircularList;
+import com.randspy.tictactoe.logic.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,16 +18,16 @@ public class PlayingGameTest {
     private Game game;
     @Mock private Player player;
     private Board board;
-    private Optional<Board> resultBoard;
+    private GameState gameState;
 
-    private Optional<Board> withNoBoardGameIsFinished() {
-        return Optional.<Board>empty();
+    private GameState withNoBoardGameIsFinished() {
+        return new GameState(Optional.<Board>empty());
     }
 
     @Before
     public void setUp() throws Exception {
         board = new Board();
-        resultBoard = Optional.of(board);
+        gameState = new GameState(Optional.of(board));
         game = new Game(new PlayersCircularList(player), board);
     }
 
@@ -39,25 +36,25 @@ public class PlayingGameTest {
         when(player.makesMove(board)).thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove(resultBoard.get());
+        verify(player).makesMove(gameState.get());
     }
 
     @Test
     public void playerMakesValidMove() {
-        when(player.makesMove(resultBoard.get()))
-                .thenReturn(resultBoard, withNoBoardGameIsFinished());
+        when(player.makesMove(board))
+                .thenReturn(gameState, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(2)).makesMove(resultBoard.get());
+        verify(player, times(2)).makesMove(gameState.get());
     }
 
     @Test
     public void playerMakesManyValidMoves() {
-        when(player.makesMove(resultBoard.get()))
-                .thenReturn(resultBoard, resultBoard, withNoBoardGameIsFinished());
+        when(player.makesMove(board))
+                .thenReturn(gameState, gameState, withNoBoardGameIsFinished());
 
         game.play();
-        verify(player, times(3)).makesMove(resultBoard.get());
+        verify(player, times(3)).makesMove(gameState.get());
     }
 
     @Test
@@ -65,31 +62,31 @@ public class PlayingGameTest {
         Player otherPlayer = mock(Player.class);
         game = new Game(new PlayersCircularList(player, otherPlayer), board);
 
-        when(player.makesMove(resultBoard.get()))
-                .thenReturn(resultBoard, withNoBoardGameIsFinished());
+        when(player.makesMove(board))
+                .thenReturn(gameState, withNoBoardGameIsFinished());
 
-        when(otherPlayer.makesMove(resultBoard.get()))
-                .thenReturn(resultBoard);
+        when(otherPlayer.makesMove(board))
+                .thenReturn(gameState);
 
         game.play();
 
-        verify(player, times(2)).makesMove(resultBoard.get());
-        verify(otherPlayer, times(1)).makesMove(resultBoard.get());
+        verify(player, times(2)).makesMove(gameState.get());
+        verify(otherPlayer, times(1)).makesMove(gameState.get());
     }
 
     @Test
     public void boardFromPlayerMoveShouldBeUsedAsInputForNextMove() {
-        Optional<Board> resultBoardAfterPlayerMove = Optional.of(new Board());
+        Board boardAfterMove = new Board();
+        GameState gameStateAfterMove = new GameState(Optional.of(boardAfterMove));
 
-        when(player.makesMove(resultBoard.get()))
-                .thenReturn(resultBoardAfterPlayerMove);
+        when(player.makesMove(board))
+                .thenReturn(gameStateAfterMove);
 
-        when(player.makesMove(resultBoardAfterPlayerMove.get()))
+        when(player.makesMove(boardAfterMove))
                 .thenReturn(withNoBoardGameIsFinished());
 
         game.play();
-        verify(player).makesMove(resultBoard.get());
-        verify(player).makesMove(resultBoardAfterPlayerMove.get());
-
+        verify(player).makesMove(gameState.get());
+        verify(player).makesMove(gameStateAfterMove.get());
     }
 }

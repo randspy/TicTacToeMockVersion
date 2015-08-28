@@ -14,7 +14,7 @@ public abstract class Player {
         this.gameResultDecider = builder.gameResultDecider;
     }
 
-    public abstract Optional<Board> makesMove(Board board);
+    public abstract GameState makesMove(Board board);
 
     public static class Builder{
 

@@ -14,7 +14,7 @@ public class HumanPlayer extends Player {
     }
 
     @Override
-    public Optional<Board> makesMove(Board board) {
+    public GameState makesMove(Board board) {
 
         this.board = board;
 
@@ -28,8 +28,9 @@ public class HumanPlayer extends Player {
             else if (isFieldAlreadyOccupied()){
                 fieldAlreadyOccupied();
             }
-            else{
-                return validInput();
+            else {
+                Optional<Board> newBoard = validInput() == NextStep.Stop ? Optional.empty() : Optional.of(this.board);
+                return new GameState(newBoard);
             }
         }
     }
@@ -74,7 +75,7 @@ public class HumanPlayer extends Player {
         askUserForPosition();
     }
 
-    private Optional<Board> validInput() {
+    private NextStep validInput() {
 
         board.setPlayerAtPosition(playerId, new PositionOnBoard(row, column));
         display.board(this.board);
@@ -83,13 +84,18 @@ public class HumanPlayer extends Player {
         Optional<PlayerId> winner = gameResultDecider.winnerIs(this.board);
         if (winner.isPresent()) {
             display.playerWon(winner.get());
-            return Optional.empty();
+            return NextStep.Stop;
         }
         else if (this.board.isFull()) {
             display.tie();
-            return Optional.empty();
+            return NextStep.Stop;
         } else {
-            return Optional.of(this.board);
+            return NextStep.Continue;
         }
+    }
+
+    public enum NextStep {
+        Continue,
+        Stop
     }
 }
