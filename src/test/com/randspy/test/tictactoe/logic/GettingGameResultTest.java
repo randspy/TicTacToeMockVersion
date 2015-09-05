@@ -1,14 +1,16 @@
 package com.randspy.test.tictactoe.logic;
 
 import com.randspy.tictactoe.logic.*;
+import org.hamcrest.*;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static com.randspy.test.tictactoe.logic.OptionalMatcher.isEmpty;
+import static com.randspy.test.tictactoe.logic.OptionalMatcher.isPresentAnd;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GettingGameResultTest {
 
@@ -49,7 +51,7 @@ public class GettingGameResultTest {
 
     @Test
     public void noWinner() {
-        assertFalse(gameResultDecider.winnerIs(board).isPresent());
+        assertThat(gameResultDecider.winnerIs(board), isEmpty());
     }
 
     @Test
@@ -60,8 +62,7 @@ public class GettingGameResultTest {
         setRowWithWinningPlayer(playerId, 0);
 
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
-        assertTrue(winner.isPresent());
-        assertEquals(playerId, winner.get());
+        assertThat(winner, isPresentAnd(is(playerId)));
     }
 
     @Test
@@ -72,8 +73,7 @@ public class GettingGameResultTest {
         setRowWithWinningPlayer(playerId, 1);
 
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
-        assertTrue(winner.isPresent());
-        assertEquals(playerId, winner.get());
+        assertThat(winner, isPresentAnd(is(playerId)));
     }
 
     @Test
@@ -84,8 +84,7 @@ public class GettingGameResultTest {
         setColumnWithWinningPlayer(playerId, 1);
 
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
-        assertTrue(winner.isPresent());
-        assertEquals(playerId, winner.get());
+        assertThat(winner, isPresentAnd(is(playerId)));
     }
 
     @Test
@@ -96,8 +95,7 @@ public class GettingGameResultTest {
         setDiagonalFromLeftToRightWithWinningPlayer(playerId);
 
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
-        assertTrue(winner.isPresent());
-        assertEquals(playerId, winner.get());
+        assertThat(winner, isPresentAnd(is(playerId)));
     }
 
     @Test
@@ -108,8 +106,7 @@ public class GettingGameResultTest {
         setDiagonalFromRightToLeftWithWinningPlayer(playerId);
 
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
-        assertTrue(winner.isPresent());
-        assertEquals(playerId, winner.get());
+        assertThat(winner, isPresentAnd(is(playerId)));
     }
 
     @Test
@@ -122,8 +119,7 @@ public class GettingGameResultTest {
         board.setPlayerAtPosition(losingPlayerId, new PositionOnBoard(0, 0));
 
         Optional<PlayerId> winner = gameResultDecider.winnerIs(board);
-        assertTrue(winner.isPresent());
-        assertEquals(winningPlayerId, winner.get());
+        assertThat(winner, isPresentAnd(is(winningPlayerId)));
     }
 
 }
